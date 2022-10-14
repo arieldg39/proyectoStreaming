@@ -13,41 +13,32 @@
     <header class="app-header">
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Streaming Rolling</a>
+              <a href="#" class="navbar-ico"></a>
+              <a class="navbar-brand" href="#">Streaming</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              </button>              
+              <div class="collapse navbar-collapse align-content-center justify-content-center" id="navbarSupportedContent">               
+                
+                <form class="d-flex ms-5 margen">                  
+                  <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                  <button class="btn btn-outline-success" type="submit">Buscar</button>                  
+                </form>                
+              </div>
+              <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="nav navbar-nav ml-auto me-4"> 
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>                  
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                  </li>
-                </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <ul class="nav navbar-nav ml-auto">
+                    <a class="nav-link" href="#">Quienes Somos?</a>
+                  </li>                
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <img src='img/avatars/users1.png' class='img-avatar'>
                       <span class="hidden-md-down">Usuario</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                      <div class="dropdown-header text-xs-center">
-                          <strong>Configuración</strong>
-                      </div>
-                        <a class="dropdown-item" href="#"><i class="fa fa-user fa-lg"></i> Perfil</a>
-                        <a class="dropdown-item" href="#"><i class="fa fa-wrench fa-lg"></i> Configurar</a>                            
-                        <a class="dropdown-item" href="#"><i class="fa fa-file fa-lg"></i> Proyectos</a>
-                        <a class="dropdown-item" href="#" id="btcerrar"><i class="fa fa-lock fa-lg"></i>Cerrar Sesión</a>  
-                    </div>                    
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a class="dropdown-item" href="#">Configurar</a></li>
+                      <li><a class="dropdown-item" href="#">Administrar Canciones</a></li>                      
+                    </ul>
                   </li>
                 </ul>
               </div>
@@ -55,43 +46,71 @@
           </nav>
     </header>
     <main class="container-pri">
+      <div class="container-fluid lbtitulo">
+        <h3>Listado de Canciones</h3>
+      </div>
+      <div class="row row-cols-2 row-cols-md-4 g-4 ms-5 me-5" id="mainContaneir">
 
+      </div>      
     </main>
-    <footer class="fixed-bottom">
+    <footer class="fixed-bottom hide" id="barraPlay">      
       <div id="progress-container" class="progress-container">
         <section id="progress" class="progress">
         </section>
       </div>
-      <div class="row">        
+      <div class="row" id="rowReproductor">        
+        <audio src="" id="audio">
+        </audio>
         <div class="col-2 btnAudio mt-2" id="btnAudio">
-          <button id="btnBack">            
-            <i class="bi bi-skip-backward"></i>
+          <button id="btnBack" onclick="btnbackward()">            
+            <i id="iconBack" class="bi bi-skip-backward"></i>
           </button>
-          <button id="btnPlay">
-            <i class="bi bi-play"></i>
+          <button id="btnPlay" onclick="btnplaySong()">
+            <i id="iconPlay" class="bi bi-play"></i>
           </button>
-          <button id="btnNext">
-            <i class="bi bi-skip-forward"></i>
+          <button id="btnNext" onclick="btnNextSong()">
+            <i id="iconNex" class="bi bi-skip-forward"></i>
           </button>
+          <div class="tiempoSong">
+            <p id="inicioSong">04:58</p>
+            <p id="duracionSong">04:58</p>
+          </div>
+
         </div>
         <div class="col-8 infoSong" id="infoSong">            
-          <div class="row w-50">            
-            <div class="col-4">
-              <img src="./img/avatars/users1.png" alt="" class="cover" id="cover">                       
+          <div class="row justify-content-between">            
+            <div class="col-1 colCover">
+              <img src="" alt="imagen de la Canción" class="cover" id="cover">
             </div>
-            <div class="col-8">
-              <p class="nameSong" id="nameSong">Perfect</p>
-              <p class="nameSinger" id="nameSinger">Ed Sheran</p>
+            <div class="col-8" id="colInfoSong">
+              <label class="nameSong mt-2 mb-0" id="nameSong">Perfect</label>
+              <label class="nameSinger" id="nameSinger"></label>
             </div>
           </div>            
         </div>
-        <div class="col-2" id="btnGuias">
-
+        <div class="col-2 btnInfo mt-2" id="btnInfo">          
+          <button>
+              <span class="d-inline-block" tabindex="0" >
+                <i class="bi bi-volume-up" id="btnSilenciar"></i>
+              </span>
+          </button>
+          <button>
+              
+                <i class="bi bi-repeat btnRepertir" id="btnRepertir" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Silenciar"></i>
+              
+            </button>
+          <button class="btnAleateorio" >
+            <i class="bi bi-shuffle" id="btnAleatorio"  data-bs-container="body" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="left" data-bs-content="Aleatorio"></i>
+          </button>          
         </div>
-      </div>
-    </footer>
-    
+      </div>     
+    </footer>       
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="js/app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    
 </body>
 </html>
