@@ -4,13 +4,21 @@
     --color1: #2C3639;
     --fondo:  #3F4E4F;
     --color3: #ffb562;
+    --colorProgress: red;
+    --grey: grey;
+    --dark: black;
+}
+
+.hide{	
+	display:none
 }
 
 body {
     max-height: 100vh;
     min-height: -webkit-fill-available;
     overflow-x: hidden !important;
-    overflow-y: auto !important;        
+    overflow-y: auto !important; 
+    background-color: var(--dark) !important;           
 }
 
 
@@ -24,14 +32,17 @@ body {
     border-bottom: 1px solid #cfd8dc; 
 }
 
-.container-pri{
+.margen{
+    width: 35rem;
+}
+.container-pri > card{
     height: calc(100vh - 7rem);    
-    background-color: var(--fondo);
+    
 }
 
 footer{
-    height: 4rem;
-    background-color: var(--color1);
+    height: 4.5rem;
+    background-color: var(--color1);    
 }
 
 .navbar .navbar-ico {
@@ -40,11 +51,16 @@ footer{
     height: 50px;
     padding: 0.1rem 0.1rem;
     margin-right: 0;        
-    background-image: url("../img/shopping.png");
+    background-image: url("../img/logo.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 50px auto;   
     white-space: nowwrap;
+}
+.lbtitulo{
+    margin-top: 1rem;
+    margin-left: 3rem !important;
+    color: white;
 }
 
 .img-avatar {
@@ -56,16 +72,32 @@ footer{
     margin: 0 10px; 
 }
 
+footer  i {
+    font-size: 1.3rem;
+    color: white;
+}
+
+.btnRepertir {
+    font-size: 1.3rem;
+    color: var(--grey);
+}
+
+#iconPlay{
+    font-size: 2.5rem;
+    color: white;
+}
+
 .progress-container {
-    height: .2rem;
+    height: .3rem;
     background-color: lightgray;
     margin-top: 0rem;
+    cursor: pointer;
 }
 
 .progress {
-    background-color: goldenrod !important;
-    width: 40%;
-    height: .2rem !important;
+    background-color:  var(--colorProgress)!important;
+    width: 0%;
+    height: .4rem !important;
 }
 
 .btnAudio {
@@ -78,23 +110,83 @@ footer{
 .btnAudio button {
     background-color: transparent;
     border: none;
+    border-radius: 50%;
 }
 
-.btnAudio i {
-    font-size: 1.7rem;
+.tiempoSong {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.5rem;
+    margin-top: 1rem;
     color: white;
+    font-size: 0.8rem;    
 }
 
 .infoSong {
     color: white;
     display: flex;
-    justify-content: space-around;     
+    justify-content: center;     
     align-content: center;
     width: fit-content;
 }
 
 .cover {
-    width: 50px;  
+    width: 75px;  
     height: 50px;  
     border-radius: .3rem;   
+    margin-top: 0.5rem;
+    margin-right: 0%;
+}
+.imgcover{
+    width: 150px;  
+    height: 150px;          
+    border-radius: .3rem;   
+}
+
+.btnInfo {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+    align-content: space-between;
+}
+
+.btnInfo > button {
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+}
+
+.listaSong{
+    background-color: var(--color1);
+}
+
+@media (max-width: 400px) {    
+    #mainContaneir{
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    #rowReproductor{
+        --bs-gutter-x: -3.0rem !important;
+    }     
+    .colCover{
+        display: none;
+    }
+    .nameSong{
+        font-size:12px;
+    }
+    #colInfoSong{
+        justify-content: center;
+    }
+    .nameSinger{
+        font-size:12px;
+    }
+    .tiempoSong{
+        display: none;
+    }
+    .card > p{
+        font-size: 11px !important;
+    }
 }
