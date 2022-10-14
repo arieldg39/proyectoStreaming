@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Streaming</title>
     <link rel="stylesheet" href="./style/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 </head>
@@ -55,6 +56,74 @@
           </nav>
     </header>
     <main class="container-pri">
+      <main>
+        <div id="cards" class="cards">
+
+        </div>
+        <div>
+            <button class="btn btn-dark" onclick="nuevoVideo()">Insertar nuevo video</button>
+            
+        </div>
+    </main>
+
+
+
+
+    <!-- Modal nuevoVideo -->
+    <div class="modal fade" id="createNewVideo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCreate">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="author" class="form-label">Nombre del autor</label>
+                            <input type="text" class="form-control" id="author">
+                        </div>
+                        <div class="mb-3">
+                            <label for="root" class="form-label">Directorio raiz</label>
+                            <input type="text" class="form-control" id="root">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Descripcion</label>
+                            <input type="text" class="form-control" id="description">
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ELIMINAR -->
+    <div class="modal fade" id="deleteVideoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header headerModal" id="headerModal">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">CONFIRMACION</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBodyEliminar">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteVideo();">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     </main>
     <footer class="fixed-bottom">

@@ -98,3 +98,50 @@ footer{
     height: 50px;  
     border-radius: .3rem;   
 }
+
+
+main {
+    background-color: black;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+
+.cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin: 1rem;
+    transition: .5s;
+}
+
+.card:hover {
+    transform:scale(1.25);
+    transition: .5s;
+    z-index: 1;
+}
+
+.card-body{
+    background-color: rgb(54, 54, 54);
+    border: 3px rgb(17, 0, 95) solid;
+    box-sizing: border-box;
+}
+
+.cardText {
+    color: white;
+    margin: 0;
+}
+
+.cardTextSecond {
+    color: rgb(165, 164, 164);
+    font-size: small;
+    margin: 0;
+}
+
+#headerModal {
+    background-color: rgb(255, 0, 0);
+    color: white;
+}
