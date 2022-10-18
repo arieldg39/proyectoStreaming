@@ -161,6 +161,46 @@ footer  i {
 .listaSong{
     background-color: var(--color1);
 }
+/* ------------------------------------------------------------------------------------------------------------------------- */
+.cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.card {
+    margin: 1rem;
+    transition: .5s;
+}
+
+.card:hover {
+    transform:scale(1.25);
+    transition: .5s;
+    z-index: 1;
+}
+
+.card-body{
+    background-color: var(--dark);
+    color: white;
+    box-sizing: border-box;
+}
+
+.cardText {
+    color: white;
+    margin: 0;
+}
+
+.cardTextSecond {
+    color: rgb(165, 164, 164);
+    font-size: small;
+    margin: 0;
+}
+
+#headerModal {
+    background-color: rgb(255, 0, 0);
+    color: white;
+}  
+/* ------------------------------------------------------------------------------------------------------------------------- */
 
 @media (max-width: 400px) {    
     #mainContaneir{
@@ -169,7 +209,7 @@ footer  i {
     }
     
     #rowReproductor{
-        --bs-gutter-x: -3.0rem !important;
+        --bs-gutter-x: -4.2rem !important;
     }     
     .colCover{
         display: none;
