@@ -166,6 +166,7 @@ footer  i {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    padding: 3rem;
 }
 
 .card {
@@ -182,6 +183,7 @@ footer  i {
 .card-body{
     background-color: var(--dark);
     color: white;
+    border: 2px blue solid;
     box-sizing: border-box;
 }
 
@@ -194,6 +196,15 @@ footer  i {
     color: rgb(165, 164, 164);
     font-size: small;
     margin: 0;
+}
+
+.meGusta {
+    font-size: small;
+
+}
+
+.botonIng {
+    padding: 2rem;
 }
 
 #headerModal {

@@ -38,7 +38,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                       <li><a class="dropdown-item" href="#">Perfil</a></li>
                       <li><a class="dropdown-item" href="#"  onclick="nuevoVideo()">Administrar Canciones</a></li>
-                      <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar Sesion</a></li>
+                      <li><a class="dropdown-item" href="#" onclick="logearse()">Login</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -48,16 +48,19 @@
     </header>
     <main class="container-pri">
     
-      <div class="container-fluid lbtitulo">
+      <div class="lbtitulo">
         <h3>Listado de Canciones</h3>
       </div>
-      <div class="row row-cols-2 row-cols-md-4 g-4 ms-5 me-5" id="mainContaneir">
-        <div id="cards" class="cards">
+      <div id="cards" class="cards">
 
+      </div>
+        <div class="botonIng" id="botonIngresar">
+          
         </div>
-      </div>      
-      <!-- Modal nuevoVideo -->
-      <div class="modal fade" id="createNewVideo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        
+        
+      <!-- Modal nuevotema -->
+      <div class="modal fade" id="createNewTema" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -110,6 +113,42 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Register -->
+    <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="formRegister">
+                      <div class="mb-3">
+                          <label for="nameRegis" class="form-label">Nombre</label>
+                          <input type="text" class="form-control" id="nameRegis">
+                      </div>
+                      <div class="mb-3">
+                          <label for="userRegis" class="form-label">mail del usuario</label>
+                          <input type="text" class="form-control" id="userRegis">
+                      </div>
+                      <div class="mb-3">
+                          <label for="passwordRegister" class="form-label">Contraseña</label>
+                          <input type="text" class="form-control" id="passwordRegister">
+                      </div>
+                      <div class="mb-3 form-check">
+                          <input type="checkbox" class="form-check-input" id="termYCond">
+                          <label class="form-check-label" for="termYCond">¿Acepta terminos y condiciones?</label>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Registrarme</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+    </div>
+
+
+
     <!--------------------------------------------------------------------------------------------------------------------------------------->
     <div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -130,7 +169,7 @@
                           <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="Ingrsar Clave" required>
                       </div>
                       <div class="mb-4">                          
-                          <a href="#" class="float-end">Olvide la Clave</a>
+                          <a href="#" onclick="register()" class="float-end">registrarme</a>
                       </div>
                   </div>
                   <div class="modal-footer pt-4">                  
@@ -202,3 +241,4 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
 </body>
 </html>
+
