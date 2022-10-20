@@ -163,10 +163,15 @@ footer  i {
 }
 /* ------------------------------------------------------------------------------------------------------------------------- */
 .cards {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 3rem;
+    width: 100%;
+    margin-left: 2rem !important;
+    transition: ease-in 0.3s;
+}
+
+.cards.expand{    
+    margin-left: 270px !important;    
+    width: calc(100% - 270px);
+    transition: ease-in 0.3s;
 }
 
 .card {

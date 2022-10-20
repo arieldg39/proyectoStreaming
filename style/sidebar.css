@@ -1,0 +1,113 @@
+:root {
+    --color1: #2C3639;
+    --fondo:  #3F4E4F;
+    --color3: #ffb562;
+    --colorProgress: red;
+    --grey: grey;
+    --dark: black;
+}
+
+#sideVar{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    position: fixed;
+    width: 270px;
+    height: 100%;
+    min-height: 350px;
+    color: white;
+    background: var(--color1);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 10px;
+    transition: ease-in 0.3s;
+    z-index: 100;
+    margin-top: 1.7rem;
+}
+
+#sideVar.hide{
+    width: 0%;
+}
+
+#sideVar > span{
+    color: violet;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 28px;
+    font-weight: 800;
+    overflow: hidden;
+}
+
+.sidebarMenu{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70%;
+    width: 100%;
+    list-style: none;
+    overflow: hidden;
+
+}
+
+.sidebarMenu li{
+    text-align: center;
+    width: 100%;
+
+}
+
+.sidebarMenu li a{
+    display: inline-flex;
+    align-items: center;
+    width: 95%;
+    padding: 5px 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    transition: ease-in 0.2s;
+    border: 1px solid black;
+    border-radius: 5px;
+
+}
+
+.sidebarMenu li a:hover{
+    color: var(--color3);
+    border: 1px solid white;
+
+}
+
+.sidebarMenu li a i{
+    margin: 0 18px;
+    width: 20px;
+}
+
+#toggle-btn{
+    box-shadow: 1px 1px 2px 2px var(--grey);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 18px;
+    right: -39px;
+    width: auto;
+    font-size: 18px;
+    background: var(--dark);
+    border-radius: 100px;
+    border:2px solid white;
+    cursor: pointer;
+    color: white;
+    transition: linear 0.2s;
+
+}
+
+#toggle-btn:hover{
+    border:  var(--color3) 2px solid ;
+    padding: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+    transform: scale(1.25);
+    background-color: white;
+
+}
+
