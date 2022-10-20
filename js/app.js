@@ -24,6 +24,9 @@ let cards = document.getElementById('cards');
 let formCreate = document.getElementById('createNewTema');
 let formLogin = document.getElementById('modalLogin');
 
+const nav = document.getElementById('sideVar');
+const toggle_btn = document.getElementById('toggle-btn');
+
 
 var secondPlay=0;
 let listado="";
@@ -39,7 +42,11 @@ let usuario = '';
 $(function() {
     $('[data-toggle="popover"]').popover()
 })
-
+/** -------------------------------------------------------------------------------- */
+toggle_btn.onclick = function() {
+    nav.classList.toggle('hide');
+    cards.classList.toggle('expand');
+}
 /** -------------------------------------------------------------------------------- */
 
 progressContainer.addEventListener('click',setProgress);
@@ -101,18 +108,17 @@ function setProgress(event) {
 /** -------------------------------------------------------------------------------- */
 const playSong = (id) =>{
     // Play Audio!      
-    for (let i = 0; i < totalSong; i++) {
-        const element = songLists.song[i];           
-        if (id==element.id) {      
+    for (const tema of cancionesAMostrar) {        
+        if (id==tema.id) {      
             actualSong=id;     
-            audio.src=element.carpeta;                        
+            audio.src=tema.carpeta;                        
             barrarProgress.style.width="0%";
             secondPlay=0;
             inicioSong.textContent="00:00";
-            nameSong.textContent=element.titulo;  
-            nameSinger.textContent=element.interprete;          
+            nameSong.textContent=tema.titulo;  
+            nameSinger.textContent=tema.interprete;          
             inicioSong.textContent="00:00";
-            duracionSong.textContent="/"+secondsToString(element.duracion);
+            duracionSong.textContent="/"+secondsToString(tema.duracion);
             barraPlay.classList.remove("hide");
             cover.src="../img/TheCovelarge.jpg";                        
             audio.play();             
@@ -164,7 +170,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
     if(usuario.tipo === 'admin') {
         for (const tema of cancionesAMostrar) {
             tarjeta = `
-            <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id}')">
+            <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id},${tema.carpeta}')">
             <img src="../img/avatars/users1.png" alt="" style="max-height: 10rem;">   
                 <div class="card-body">
                     <ul>
@@ -346,7 +352,7 @@ formLogin.addEventListener('submit',(e)=>{
 
 /** -------------------------------------------------------------------------------- */
 const main = async () => {                  
-        const response = await fetch('../js/song.txt'); 
+        const response = await fetch('./js/song.txt'); 
         const playlists= await response.json();
         localStorage.setItem('temas', JSON.stringify(playlists));
         mostrarCanciones(playlists);
