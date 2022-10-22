@@ -318,7 +318,10 @@ const createLista = () => {
     temas = JSON.parse(localStorage.getItem('temas'));
     const userFound = users.find((user) => user.id === usuario.id)
     let tarjeta;
+    let listaDeNombres= [];
     const tarjetas = [];
+    let contenedorCards = document.getElementById('contenedorCards');
+    console.log(contenedorCards);
     for (const tema of temas) {
         tarjeta = `
             <div class="card" style="width: 16rem ;">
@@ -337,7 +340,31 @@ const createLista = () => {
             `;
             tarjetas.push(tarjeta);
         }
-        cards.innerHTML= tarjetas.join(' ');
+        let user = users.find((user)=>user.correo === usuario.correo);
+        usuario = user;
+        for (let i = 0; i < usuario.lista.length; i++) {
+            element = usuario.lista[i];
+            const Recorrido = temas.map((tema) => {
+                if (tema.id === usuario.lista[i]) {
+                    let temaelegido = `<li>${tema.titulo}</li>`
+                    listaDeNombres.push(temaelegido);
+                }
+            });
+        }
+            let tuLista = `
+                <div class="contenedorTuLista">    
+                    <div id="cards" class="row row-cols-2 row-cols-md-4 g-4 expand cards">
+                    ${tarjetas.join(' ')}
+                    </div>
+                    <div class="ListaSeleccionada">
+                        <h4>Tu lista seleccionada</h4>
+                        <ol>
+                            ${listaDeNombres.join(' ')}
+                        </ol>        
+                    </div>
+                </div>
+                `
+    contenedorCards.innerHTML= tuLista;
     }
 
     const addListaReproducciones = (addId) => {
@@ -348,6 +375,7 @@ const createLista = () => {
         userFound.lista.push(addId);
         console.log(users);
         localStorage.setItem("users", JSON.stringify(users));
+        createLista();
     }
 
 

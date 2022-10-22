@@ -216,6 +216,16 @@ footer  i {
     background-color: rgb(255, 0, 0);
     color: white;
 }  
+
+.contenedorTuLista {
+    display: flex;
+    
+}
+
+.ListaSeleccionada {
+    color: white;
+    background-color: blue;
+}
 /* ------------------------------------------------------------------------------------------------------------------------- */
 
 @media (max-width: 400px) {    
