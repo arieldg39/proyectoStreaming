@@ -21,7 +21,7 @@
               </button>              
               <div class="collapse navbar-collapse align-content-center justify-content-center" id="navbarSupportedContent">                               
                 <form class="d-flex ms-5 margen">                  
-                  <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                  <input class="form-control me-2" oninput="buscar(this.value)" type="search" placeholder="Buscar" aria-label="Buscar">
                   <button class="btn btn-outline-success" type="submit">Buscar</button>                  
                 </form>                
               </div>
@@ -56,12 +56,16 @@
                 <a href="#" id="btnHome"> <i class="bi bi-house-door"></i> Home</a>
             </li>
             <li>
-                <a href="#">        
+                <a href="#" onclick="mostrarMiLista()">        
                   <i class="bi  bi-collection-play"></i> Tu Lista
                 </a>
             </li>
             <li>
-                <a href="#"><i class="bi bi-plus-square"></i> Crear tu Lista</a>
+
+                <a href="#" onclick="createLista()">
+                  <i class="bi bi-plus-square" ></i> Crear tu Lista
+                </a>
+
             </li>
             <li>
                 <a href="#"> <i class="bi bi-gear"></i> Configurar</a>
@@ -74,10 +78,12 @@
         </ul>
     </nav>
     <!----------------------------------------------------------------------------------------------------------------->  
+      <div id="contenedorCards">
+          <div id="cards" class="row row-cols-2 row-cols-md-4 g-4 expand cards">
 
-      <div id="cards" class="row row-cols-2 row-cols-md-4 me-3 expand cards">
 
-      </div>
+          </div>
+    </div>
 
       <div class="botonIng" id="botonIngresar"></div>                
         <!-- Modal nuevotema -->
