@@ -22,7 +22,7 @@
     border-bottom-right-radius: 10px;
     transition: ease-in 0.3s;
     z-index: 100;
-    margin-top: 1.7rem;
+    margin-top: 0.2rem;
 }
 
 #sideVar.hide{
@@ -45,7 +45,7 @@
     flex-direction: column;
     justify-content: space-around;
     height: 70%;
-    width: 100%;
+    width: 95%;
     list-style: none;
     overflow: hidden;
 
@@ -60,15 +60,14 @@
 .sidebarMenu li a{
     display: inline-flex;
     align-items: center;
-    width: 95%;
-    padding: 5px 15px;
+    width: 90%;
+    padding: 5px 1px;
     color: white;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 21px;
     transition: ease-in 0.2s;
-    border: 1px solid black;
-    border-radius: 5px;
-
+    /*border: 1px solid black;*/
+    border-radius: 10px;    
 }
 
 .sidebarMenu li a:hover{
@@ -91,14 +90,13 @@
     top: 18px;
     right: -39px;
     width: auto;
-    font-size: 18px;
+    font-size: 10px;
     background: var(--dark);
     border-radius: 100px;
     border:2px solid white;
     cursor: pointer;
     color: white;
     transition: linear 0.2s;
-
 }
 
 #toggle-btn:hover{

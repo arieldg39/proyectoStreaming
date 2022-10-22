@@ -7,6 +7,7 @@
     <title>Proyecto Streaming</title>
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/sidebar.css">
+    <link rel="stylesheet" href="./style/about.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
 </head>
 <body>
@@ -14,7 +15,7 @@
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
             <div class="container-fluid">
               <a href="#" class="navbar-ico"></a>
-              <a class="navbar-brand" href="#">Streaming</a>
+              <a class="navbar-brand lbMusica" href="#">RollingMusic's</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>              
@@ -27,14 +28,14 @@
               <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto"> 
                   <li class="nav-item">
-                    <a class="nav-link" href="./page/login.html">Quienes Somos?</a>
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalAbout">Quienes Somos?</a>
                   </li>                
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="menuUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <img src='img/avatars/users1.png' class='img-avatar'>
                       <span class="hidden-md-down" id="nameUser" ></span>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <ul class="dropdown-menu" aria-labelledby="menuUsuario">
                       <li><a class="dropdown-item" href="#">Perfil</a></li>
                       <li><a class="dropdown-item" href="#"  onclick="nuevoVideo()">Administrar Canciones</a></li>
                       <li><a class="dropdown-item" href="#" onclick="logearse()">Login</a></li>
@@ -51,8 +52,8 @@
         <button type="button" id="toggle-btn"><img src="./img/logo.png" alt="" width="50px"></button>
             <span></span>
         <ul class="sidebarMenu">
-            <li>
-                <a href="#"> <i class="bi bi-house-door"></i> Home</a>
+            <li >
+                <a href="#" id="btnHome"> <i class="bi bi-house-door"></i> Home</a>
             </li>
             <li>
                 <a href="#">        
@@ -60,15 +61,13 @@
                 </a>
             </li>
             <li>
-                <a href="#">
-                  <i class="bi bi-plus-square"></i> Crear tu Lista
-                </a>
+                <a href="#"><i class="bi bi-plus-square"></i> Crear tu Lista</a>
             </li>
             <li>
                 <a href="#"> <i class="bi bi-gear"></i> Configurar</a>
             </li>
             <li id="bgModeBtn"> 
-              <a href="#">
+              <a href="./page/error404.html">
                 <i class="bi bi-moon"></i> Dark Mood
               </a>
             </li>
@@ -76,133 +75,189 @@
     </nav>
     <!----------------------------------------------------------------------------------------------------------------->  
 
-      <div id="cards" class="row row-cols-2 row-cols-md-4 g-4 expand cards">
+      <div id="cards" class="row row-cols-2 row-cols-md-4 me-3 expand cards">
 
       </div>
 
       <div class="botonIng" id="botonIngresar"></div>                
+        <!-- Modal nuevotema -->
+        <div class="modal fade" id="createNewTema" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="formCreate">
+                          <div class="mb-3">
+                              <label for="name" class="form-label">Nombre</label>
+                              <input type="text" class="form-control" id="name">
+                          </div>
+                          <div class="mb-3">
+                              <label for="author" class="form-label">Nombre del autor</label>
+                              <input type="text" class="form-control" id="author">
+                          </div>
+                          <div class="mb-3">
+                              <label for="root" class="form-label">Directorio raiz</label>
+                              <input type="text" class="form-control" id="root">
+                          </div>
+                          <div class="mb-3">
+                              <label for="description" class="form-label">Descripcion</label>
+                              <input type="text" class="form-control" id="description">
+                          </div>                        
+                          <div class="mb-3 form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
 
-      <!-- Modal nuevotema -->
-      <div class="modal fade" id="createNewTema" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+      <!-- Modal ELIMINAR -->
+      <div class="modal fade" id="deleteVideoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header headerModal" id="headerModal">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">CONFIRMACION</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body" id="modalBodyEliminar">
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                      <button type="button" class="btn btn-danger" onclick="deleteVideo();">Eliminar</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Modal Register -->
+      <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Registro de Usuarios</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formCreate">
+                    <form id="formRegister">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name">
+                            <label for="nameRegis" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nameRegis" required>
                         </div>
                         <div class="mb-3">
-                            <label for="author" class="form-label">Nombre del autor</label>
-                            <input type="text" class="form-control" id="author">
+                            <label for="userRegis" class="form-label">mail del usuario</label>
+                            <input type="email" class="form-control" id="userRegis" required>
                         </div>
                         <div class="mb-3">
-                            <label for="root" class="form-label">Directorio raiz</label>
-                            <input type="text" class="form-control" id="root">
+                            <label for="passwordRegister" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="passwordRegister" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Descripcion</label>
-                            <input type="text" class="form-control" id="description">
-                        </div>                        
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            <input type="checkbox" class="form-check-input" id="termYCond" required>
+                            <label class="form-check-label" for="termYCond">¿Acepta terminos y condiciones?</label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div modal-footer pt-4>
+                          <button type="submit" class="btn btn-primary">Registrarme</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Modal ELIMINAR -->
-    <div class="modal fade" id="deleteVideoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+      </div>
+      <!--------------------------------------------------------------------------------------------------------------------------------------->
+      <div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header headerModal" id="headerModal">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">CONFIRMACION</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="modalBodyEliminar">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteVideo();">Eliminar</button>
-                </div>
+                <!-- Login Form -->
+                <form id="formLogin">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Login</h5>                
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="userEmail">Correo Elecronico<span class="text-danger">*</span></label>
+                            <input type="email" name="userEmail" class="form-control" id="userEmail" placeholder="Ingresar Correo" required>
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="userPassword">Clave<span class="text-danger">*</span></label>
+                            <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="Ingrsar Clave" required>
+                        </div>
+                        <div class="mb-4">                          
+                            <a href="#" onclick="register()" class="float-end">registrarme</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer pt-4">                  
+                        <button type="submit" class="btn btn-dark mx-auto w-100" > <i class="bi bi-user"></i> Login</button>
+                    </div>                  
+                </form>
             </div>
         </div>
     </div>
-
-    <!-- Modal Register -->
-    <div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <form id="formRegister">
-                      <div class="mb-3">
-                          <label for="nameRegis" class="form-label">Nombre</label>
-                          <input type="text" class="form-control" id="nameRegis">
-                      </div>
-                      <div class="mb-3">
-                          <label for="userRegis" class="form-label">mail del usuario</label>
-                          <input type="text" class="form-control" id="userRegis">
-                      </div>
-                      <div class="mb-3">
-                          <label for="passwordRegister" class="form-label">Contraseña</label>
-                          <input type="text" class="form-control" id="passwordRegister">
-                      </div>
-                      <div class="mb-3 form-check">
-                          <input type="checkbox" class="form-check-input" id="termYCond">
-                          <label class="form-check-label" for="termYCond">¿Acepta terminos y condiciones?</label>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Registrarme</button>
-                  </form>
-              </div>
-          </div>
-      </div>
-    </div>
-
-
-
     <!--------------------------------------------------------------------------------------------------------------------------------------->
-    <div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modalAbout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-              <!-- Login Form -->
-              <form id="formLogin">
-                  <div class="modal-header">
-                      <h5 class="modal-title">Login</h5>                
+          <div class="modal-content">                            
+                <div class="modal-body">
+                  <div class="about-section">
+                    <h1>About Us Page</h1>
+                    <p>Some text about who we are and what we do.</p>
+                    <p>Resize the browser window to see that this page is responsive by the way.</p>
                   </div>
-                  <div class="modal-body">
-                      <div class="mb-3">
-                          <label for="userEmail">Correo Elecronico<span class="text-danger">*</span></label>
-                          <input type="email" name="userEmail" class="form-control" id="userEmail" placeholder="Ingresar Correo" required>
+                  
+                  <h2 style="text-align:center">Our Team</h2>
+                  <div class="row">
+                    <div class="column">
+                      <div class="cardAbout">
+                        <img src="/w3images/team1.jpg" alt="Jane" style="width:100%">
+                        <div class="container">
+                          <h2>Jane Doe</h2>
+                          <p class="title">CEO & Founder</p>
+                          <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                          <p>jane@example.com</p>
+                          <p><button class="button">Contact</button></p>
+                        </div>
                       </div>
-          
-                      <div class="mb-3">
-                          <label for="userPassword">Clave<span class="text-danger">*</span></label>
-                          <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="Ingrsar Clave" required>
+                    </div>                  
+                    <div class="column">
+                      <div class="cardAbout">
+                        <img src="/w3images/team2.jpg" alt="Mike" style="width:100%">
+                        <div class="container">
+                          <h2>Mike Ross</h2>
+                          <p class="title">Art Director</p>
+                          <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                          <p>mike@example.com</p>
+                          <p><button class="button">Contact</button></p>
+                        </div>
                       </div>
-                      <div class="mb-4">                          
-                          <a href="#" onclick="register()" class="float-end">registrarme</a>
+                    </div>                    
+                    <div class="column">
+                      <div class="cardAbout">
+                        <img src="/w3images/team3.jpg" alt="John" style="width:100%">
+                        <div class="container">
+                          <h2>John Doe</h2>
+                          <p class="title">Designer</p>
+                          <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                          <p>john@example.com</p>
+                          <p><button class="button">Contact</button></p>
+                        </div>
                       </div>
+                    </div>
                   </div>
-                  <div class="modal-footer pt-4">                  
-                      <button type="submit" class="btn btn-dark mx-auto w-100" > <i class="bi bi-user"></i> Login</button>
-                  </div>                  
-              </form>
+                </div>
+                <div class="modal-footer pt-4">                  
+                    <button type="submit" class="btn btn-dark mx-auto w-100" > <i class="bi bi-user"></i> Login</button>
+                </div>                                
           </div>
       </div>
   </div>
-    </main>
+</main>
+  </main>
 
     <footer class="fixed-bottom hide" id="barraPlay">      
       <div id="progress-container" class="progress-container">
@@ -245,13 +300,11 @@
                 <i class="bi bi-volume-up" id="btnSilenciar"></i>
               </span>
           </button>
-          <button>
-              
-                <i class="bi bi-repeat btnRepertir" id="btnRepertir" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Silenciar"></i>
-              
+          <button>              
+                <i class="bi bi-repeat btnRepertir" id="btnRepetir" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Silenciar"></i>              
             </button>
           <button class="btnAleateorio" >
-            <i class="bi bi-shuffle" id="btnAleatorio"  data-bs-container="body" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="left" data-bs-content="Aleatorio"></i>
+            <i class="bi bi-shuffle btnAleatorio" id="btnAleatorio"  data-bs-container="body" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="left" data-bs-content="Aleatorio"></i>
           </button>          
         </div>
       </div>     

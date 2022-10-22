@@ -32,12 +32,10 @@ body {
     border-bottom: 1px solid #cfd8dc; 
 }
 
-.margen{
-    width: 35rem;
-}
-.container-pri > card{
+
+.container-pri {
     height: calc(100vh - 7rem);    
-    
+    margin-right: 4rem !important;
 }
 
 footer{
@@ -63,6 +61,15 @@ footer{
     color: white;
 }
 
+.lbMusica{
+    color: violet !important;    
+    text-align: center;
+    padding: 20px 0;
+    font-size: 28px;
+    font-weight: 800;
+    overflow: hidden;
+}
+
 .img-avatar {
     border-radius: 50em; 
 }
@@ -81,6 +88,12 @@ footer  i {
     font-size: 1.3rem;
     color: var(--grey);
 }
+
+.btnAleatorio {
+    font-size: 1.3rem;
+    color: var(--grey);
+}
+
 
 #iconPlay{
     font-size: 2.5rem;
@@ -170,7 +183,8 @@ footer  i {
 
 .cards.expand{    
     margin-left: 270px !important;    
-    width: calc(100% - 270px);
+    margin-right: 50px !important;
+    width: calc(100% - 270px);    
     transition: ease-in 0.3s;
 }
 
@@ -190,17 +204,33 @@ footer  i {
     color: white;
     border: 2px blue solid;
     box-sizing: border-box;
+    
+}
+
+li {
+    text-decoration: none;
 }
 
 .cardText {
     color: white;
     margin: 0;
+    
 }
 
 .cardTextSecond {
     color: rgb(165, 164, 164);
     font-size: small;
     margin: 0;
+}
+
+.textInfo{
+    list-style: none;
+    text-align: center;
+    margin-left: -2rem;
+}
+
+.textInfo li a{
+    text-decoration: none !important;    
 }
 
 .meGusta {
@@ -219,6 +249,10 @@ footer  i {
 /* ------------------------------------------------------------------------------------------------------------------------- */
 
 @media (max-width: 400px) {    
+    #sideVar{
+        display: none !important;
+    }   
+
     #mainContaneir{
         margin-left: 0 !important;
         margin-right: 0 !important;

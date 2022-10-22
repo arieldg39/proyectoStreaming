@@ -5,7 +5,9 @@
       "interprete":"Alex Midi",
       "duracion":227,
       "carpeta":"../audio/Alex Midi - In The Air Tonight (Radio Edit) ft. Delacey.mp3",
-      "meGusta":0
+      "meGusta":0,
+      "categoria":"",
+      "cover":"../img/alexmidi.jpg"
     },
     {
       "id":2,
@@ -13,7 +15,9 @@
       "interprete":"Marama",
       "duracion":154,
       "carpeta":"../audio/Bronceado.mp3",
-      "meGusta":0
+      "meGusta":0,
+      "categoria":"",
+      "cover":"../img/marama.jpg"
     },
     {
       "id":3,
@@ -21,7 +25,9 @@
       "interprete":"Calvin Harris",
       "duracion":154,
       "carpeta":"../audio/Calvin Harris - Blame ft. John Newman.mp3",
-      "meGusta":0
+      "meGusta":0,
+      "categoria":"",
+      "cover":"../img/calvinharrisblame.jpg"
     },
     {
       "id":4,
@@ -29,7 +35,8 @@
       "interprete":"Carlos Vives - Sebastian Yatra",
       "duracion":181,
       "carpeta":"../audio/Carlos Vives Sebastian Yatra - Robarte un Beso.mp3",
-      "meGusta":0
+      "meGusta":0,"categoria":"",
+      "cover":"../img/Robarte_un_Beso.jpg"
     },
     {
       "id":5,
@@ -37,7 +44,9 @@
       "interprete":"CNCO",
       "duracion":181,
       "carpeta":"../audio/CNCO   Para Enamorarte.mp3",
-      "meGusta":0
+      "meGusta":0,
+      "categoria":"",
+      "cover":"../img/ParaEnamorarte.jpg"
     },
     {
       "id":6,
@@ -45,6 +54,8 @@
       "interprete":"Coldplay",
       "duracion":181,
       "carpeta":"../audio/Coldplay - Adventure Of A Lifetime.mp3",
-      "meGusta":0
+      "meGusta":0,
+      "categoria":"",
+      "cover":"../img/aventure.jpg"
     }
 ]
