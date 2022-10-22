@@ -281,7 +281,6 @@ const generateId = function () {
 
 
 const ModaleliminarVideo = (id, nombre) => {
-    console.log(id);
     const deleteModal = document.getElementById('modalBodyEliminar');
     console.log(deleteModal);
     deleteModal.innerHTML = 
@@ -306,13 +305,69 @@ const deleteVideo = () => {
 
 const like = (idLike) => {
     temas = JSON.parse(localStorage.getItem('temas'));
-    let videolike = temas.find((video) => video.id === idLike);
-    console.log(videolike);
-    videolike.meGusta = videolike.meGusta + 1;
-    console.log(videolike.meGusta);
+    let songlike = temas.find((song) => song.id === idLike);
+    console.log(songlike);
+    songlike.meGusta = songlike.meGusta + 1;
+    console.log(songlike.meGusta);
     localStorage.setItem('temas', JSON.stringify(temas));
     mostrarCanciones(temas);
 }
+
+const createLista = () => {
+    users =JSON.parse(localStorage.getItem('users'));
+    temas = JSON.parse(localStorage.getItem('temas'));
+    const userFound = users.find((user) => user.id === usuario.id)
+    let tarjeta;
+    const tarjetas = [];
+    for (const tema of temas) {
+        tarjeta = `
+            <div class="card" style="width: 16rem ;">
+            <img src="../img/avatars/users1.png" alt="" style="max-height: 10rem;">   
+                <div class="card-body">
+                    <ul>
+                        <li><a class="cardText">Nombre: ${tema.titulo}</a></li>
+                        <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                        <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
+                    </ul>
+                    <button type="button" class="btn btn-secondary" onclick="addListaReproducciones(${tema.id})"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                    </svg> Agregar a lista de resproducciones</button>
+                </div>
+            </div>
+            `;
+            tarjetas.push(tarjeta);
+        }
+        cards.innerHTML= tarjetas.join(' ');
+    }
+
+    const addListaReproducciones = (addId) => {
+        users = JSON.parse(localStorage.getItem('users'));
+        console.log(usuario);
+        let userFound = users.find((user) => user.correo === usuario.correo);
+        console.log(userFound);
+        userFound.lista.push(addId);
+        console.log(users);
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+
+
+    const mostrarMiLista = () => {
+        users = JSON.parse(localStorage.getItem('users'));
+        temas = JSON.parse(localStorage.getItem('temas'));
+        let listaPropia = [];
+        let user = users.find((user)=>user.correo === usuario.correo);
+        usuario = user;
+        for (let i = 0; i < usuario.lista.length; i++) {
+            element = usuario.lista[i];
+            const Recorrido = temas.map((tema) => {
+                if (tema.id === usuario.lista[i]) {
+                    listaPropia.push(tema);
+                }
+            });
+        }
+        console.log(listaPropia);
+        mostrarCanciones(listaPropia);
+    }
 
 
 /** -------------------------------------------------------------------------------- */
@@ -368,7 +423,8 @@ const iniciarUsers = () =>{
             nombre:'admin',
             correo:'administrador@gmail.com',
             clave: '1234',
-            tipo:'admin'
+            tipo:'admin',
+            lista: []
         };               
         users.push(user);
         localStorage.setItem("users", JSON.stringify(users));        
@@ -389,7 +445,8 @@ formRegister.addEventListener('submit' , (e) =>{
         nombre:e.target[0].value,
         correo:e.target[1].value,
         clave: e.target[2].value,
-        tipo:'user'
+        tipo:'user',
+        lista: []
     };
     const buscarUser = users.find((bus)=> bus.correo === e.target[1].value);  
     if(!buscarUser){
