@@ -1,3 +1,127 @@
+const song =[
+    {
+        "id":1,
+        "titulo":"In The Air Tonight (Radio Edit) ft. Delacey",
+        "interprete":"Alex Midi",
+        "duracion":227,
+        "carpeta":"../audio/Alex Midi - In The Air Tonight (Radio Edit) ft. Delacey.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/alexmidi.jpg"
+    },
+    {
+        "id":2,
+        "titulo":"Bronceado",
+        "interprete":"Marama",
+        "duracion":154,
+        "carpeta":"../audio/Bronceado.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/marama.jpg"
+    },
+    {
+        "id":3,
+        "titulo":"Blame ft. John Newman",
+        "interprete":"Calvin Harris",
+        "duracion":154,
+        "carpeta":"../audio/Calvin Harris - Blame ft. John Newman.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/calvinharrisblame.jpg"
+    },
+    {
+        "id":4,
+        "titulo":"Robarte un Beso",
+        "interprete":"Carlos Vives - Sebastian Yatra",
+        "duracion":181,
+        "carpeta":"../audio/Carlos Vives Sebastian Yatra - Robarte un Beso.mp3",
+        "meGusta":0,"categoria":"",
+        "cover":"../img/Robarte_un_Beso.jpg"
+    },
+    {
+        "id":5,
+        "titulo":"Para Enamorarte",
+        "interprete":"CNCO",
+        "duracion":181,
+        "carpeta":"../audio/CNCO   Para Enamorarte.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/ParaEnamorarte.jpg"
+        },
+    {
+        "id":6,
+        "titulo":"Adventure Of A Lifetime",
+        "interprete":"Coldplay",
+        "duracion":181,
+        "carpeta":"../audio/Coldplay - Adventure Of A Lifetime.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/aventure.jpg"
+    },
+    {
+        "id":7,
+        "titulo":"Mama Said",
+        "interprete":"Lukas Graham",
+        "duracion":208,
+        "carpeta":"../audio/Lukas Graham - Mama Said [OFFICIAL MUSIC VIDEO].mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/lukas_graham_mama_said.jpg"
+    },
+    {
+        "id":8,
+        "titulo":"In the air tonight (live)",
+        "interprete":"Phil Collins",
+        "duracion":408,
+        "carpeta":"../audio/Phil Collins - In the air tonight (live)",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/collings.jpg"
+    },
+    {
+        "id":9,
+        "titulo":"Amor Con Hielo",
+        "interprete":"Morat",
+        "duracion":408,
+        "carpeta":"../audio/Morat - Amor Con Hielo.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/morat_amor_con_hielo.jpg"
+    },
+    {
+        "id":10,
+        "titulo":"Like a Stone",
+        "interprete":"Audioslave",
+        "duracion":408,
+        "carpeta":"../audio/Audioslave - Like a Stone.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/audioslave.jpg"
+    },
+    {
+        "id":11,
+        "titulo":"Dark Necessities.mp3",
+        "interprete":"Red Hoychili Peppers",
+        "duracion":408,
+        "carpeta":"../audio/Red Hoychili Peppers - Dark Necessities.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/darknecessities.jpg"
+    }  
+    ,
+    {
+        "id":12,
+        "titulo":"Perfect.mp3",
+        "interprete":"Ed sheeran",
+        "duracion":408,
+        "carpeta":"../audio/Ed sheeran - Perfect.mp3",
+        "meGusta":0,
+        "categoria":"",
+        "cover":"../img/ed_sheeran_perfect.jpg"
+    }
+]
+
+
 const listSong = document.getElementById("listSong");
 const cover = document.getElementById("cover");
 const audio = document.getElementById("audio");
@@ -11,6 +135,8 @@ const btnPlay = document.getElementById("btnPlay");
 const btnNext = document.getElementById("btnNext");
 const btnBack = document.getElementById("btnBack");
 const btnSilenciar = document.getElementById("btnSilenciar");
+const btnRepetir = document.getElementById("btnRepetir");
+const btnAleatorio = document.getElementById("btnAleatorio");
 
 
 const iconPlay = document.getElementById("iconPlay");
@@ -25,12 +151,14 @@ let formCreate = document.getElementById('createNewTema');
 let formLogin = document.getElementById('modalLogin');
 
 const nav = document.getElementById('sideVar');
+const btnHome = document.getElementById('btnHome');
 const toggle_btn = document.getElementById('toggle-btn');
+
+const menuUsuario = document.getElementById('menuUsuario');
 
 
 var secondPlay=0;
-let listado="";
-let lists;
+let listsSong;
 let opcion;
 var actualSong=0;
 let totalSong=0;
@@ -38,6 +166,9 @@ var users=[];
 let temas = [];
 let idVideoDelete = '';
 let usuario = '';
+var repSong=false;
+var randonSong=false;
+
 
 $(function() {
     $('[data-toggle="popover"]').popover()
@@ -48,9 +179,9 @@ toggle_btn.onclick = function() {
     cards.classList.toggle('expand');
 }
 /** -------------------------------------------------------------------------------- */
-
 progressContainer.addEventListener('click',setProgress);
 /** -------------------------------------------------------------------------------- */
+
 btnSilenciar.addEventListener('click',()=>{    
     if(audio.muted) {
         audio.muted = false;
@@ -88,15 +219,12 @@ const updateControls = () =>{
     }
 }
 /** -------------------------------------------------------------------------------- */
-function contador(){
-	inicioSong.textContent=secondsToString(secondPlay);    
-    secondPlay++;
-}
-/** -------------------------------------------------------------------------------- */
 const barraTiempoSong = (event) =>{
     const {duration, currentTime} = event.srcElement;
     const percent = (currentTime / duration) * 100;
-    barrarProgress.style.width = percent+"%";    
+    barrarProgress.style.width = percent+"%";   
+    const seg = parseInt(currentTime);
+    inicioSong.textContent=secondsToString(seg);  
 }
 /** -------------------------------------------------------------------------------- */
 function setProgress(event) {
@@ -106,9 +234,8 @@ function setProgress(event) {
     audio.currentTime = current
 }
 /** -------------------------------------------------------------------------------- */
-const playSong = (id) =>{
-    // Play Audio!      
-    for (const tema of cancionesAMostrar) {        
+const playSong = (id) =>{    
+    for (const tema of listsSong) {        
         if (id==tema.id) {      
             actualSong=id;     
             audio.src=tema.carpeta;                        
@@ -120,7 +247,7 @@ const playSong = (id) =>{
             inicioSong.textContent="00:00";
             duracionSong.textContent="/"+secondsToString(tema.duracion);
             barraPlay.classList.remove("hide");
-            cover.src="../img/TheCovelarge.jpg";                        
+            cover.src=tema.cover;
             audio.play();             
             opcion="play";
             updateControls();    
@@ -145,25 +272,60 @@ const btnplaySong = () => {
 }
 /** -------------------------------------------------------------------------------- */
 const btnNextSong = () => {    
-    if (actualSong < totalSong) {
-        actualSong++;        
-        playSong(actualSong);
+    if(randonSong===true) {
+        aleatorioSong();
     } else {
-        playSong(0);
+        if(repSong===true) {
+            playSong(actualSong);
+        }
+        else{
+            if (actualSong < totalSong) {
+                actualSong++;        
+                playSong(actualSong);
+            } else {
+                playSong(0);
+            }
+        }
     }
 }
 /** -------------------------------------------------------------------------------- */
-const btnbackward = () => {    
-    if (actualSong > 0) {        
-        actualSong--;
+const btnbackward = () => {  
+    if(repSong===true)  {
         playSong(actualSong);
-    } else {
-        totalSong--;
-        playSong(totalSong);
+    }
+    else{
+        if (actualSong > 0) {        
+            actualSong--;
+            playSong(actualSong);
+        } else {
+            totalSong--;
+            playSong(totalSong);
+        }
     }
 }
 /** -------------------------------------------------------------------------------- */
+const repetirSong = () => {    
+    if(repSong===false)
+    {
+        btnRepetir.style.color = "white";
+        repSong=true;
+    }
+    else
+    {
+        btnRepetir.style.color = "grey";
+        repSong=false;
+    }
+}
 /** -------------------------------------------------------------------------------- */
+
+const aleatorioSong = () => {
+    if(randonSong===true){        
+        var id = Math.floor(Math.random() * 12) + 1;        
+        playSong(id) 
+    } else {
+        btnAleatorio.style.color="grey";        
+    }
+
 const mostrarCanciones = (cancionesAMostrar) => {
     let tarjeta;
     const tarjetas = [];
@@ -243,8 +405,9 @@ const mostrarCanciones = (cancionesAMostrar) => {
             const botonIngresar = document.getElementById('botonIngresar');
             botonIngresar.innerHTML = '';
         }
-}
 
+}
+/** -------------------------------------------------------------------------------- */
 const nuevoTema = () => {    
     $('#createNewTema').modal('show');
     
@@ -412,11 +575,9 @@ const createLista = () => {
 
 /** -------------------------------------------------------------------------------- */
 const loadListSonmg = (user) =>{
-
-        nameUser.textContent = user.nombre;
-        temas = JSON.parse(localStorage.getItem('temas'));
-        mostrarCanciones(temas);
-
+    nameUser.textContent = user.nombre;
+    temas = JSON.parse(localStorage.getItem('temas'));
+    mostrarCanciones(temas);
     document.getElementById("formLogin").reset();
 }
 /** -------------------------------------------------------------------------------- */
@@ -425,34 +586,112 @@ const cerrarSesion = () =>{
     nameUser.textContent='';    
     barraPlay.classList.add('hide');    
 }
-
+/** -------------------------------------------------------------------------------- */
 const logearse = () => {
     $("#modalLogin").modal('show');
 };
-
-formLogin.addEventListener('submit',(e)=>{
-    e.preventDefault();
-    const usersLo = JSON.parse(localStorage.getItem('users'));    
-    const userFound = usersLo.find((bus)=> bus.correo === e.target[0].value && bus.clave === e.target[1].value);    
-    if(userFound) {
-        $("#modalLogin").modal('hide');
-        usuario = userFound;
-        loadListSonmg(usuario);
-    }
-    else
-    {
-        swal("Error de Login!", "Los datos ingresados no son correctos!!!", "error");
-    }
-});
-
 /** -------------------------------------------------------------------------------- */
-const main = async () => {                  
-        const response = await fetch('./js/song.txt'); 
-        const playlists= await response.json();
-        localStorage.setItem('temas', JSON.stringify(playlists));
-        mostrarCanciones(playlists);
-        songLists = playlists;
-        totalSong = Object.keys(playlists).length;                           
+const mostrarCanciones = (cancionesAMostrar) => {
+    let tarjeta;
+    cards.innerHTML="";
+    let tarjetas = [];    
+    listsSong = cancionesAMostrar;
+    //console.log(tarjetas);    
+    if(usuario.tipo === 'admin') {
+        for (const tema of cancionesAMostrar) {
+            document.getElementById("formLogin").reset();
+            nameUser.textContent = usuario.nombre;
+            menuUsuario.setAttribute("disabled",false);
+            tarjeta = `
+            <div class="col mt-5 mb-1">
+                <div class="card" style="width: 16rem;">
+                <img style="max-height: 12rem;" src="${tema.cover}" alt="Imagen del Album de la Cancion"  onclick="playSong('${tema.id}')">   
+                    <div class="card-body">
+                        <ul class="textInfo">
+                            <li><a class="cardText">${tema.titulo}</a></li>
+                            <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                            <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
+                            <li><button class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
+                                <i class="bi bi-emoji-heart-eyes-fill"></i>                                    
+                                Me Gusta - ${tema.meGusta}</button>
+                            </li>
+                        </ul>
+                            <button class="btn btn-danger" onclick="ModaleliminarVideo('${tema.id}', '${tema.titulo}')">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+            `;
+            tarjetas.push(tarjeta);
+        }
+        cards.innerHTML= tarjetas.join(' ');
+        const botonIngresar = document.getElementById('botonIngresar');
+        botonIngresar.innerHTML = '<button class="btn btn-dark" onclick="nuevoTema()">Insertar nuevo video</button>'       
+        }
+        else 
+        {
+            if (usuario.tipo === 'user') {
+                for (const tema of cancionesAMostrar) {
+                    document.getElementById("formLogin").reset();
+                    nameUser.textContent = usuario.nombre;
+                    menuUsuario.setAttribute("disabled",false);
+                    tarjeta = `
+                    <div class="col mt-5 mb-1">
+                        <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id}')">
+                        <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;">   
+                            <div class="card-body">
+                                <ul class="textInfo">
+                                    <li><a class="cardText">${tema.titulo}</a></li>
+                                    <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                                    <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
+                                    <li><button class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
+                                        <i class="bi bi-emoji-heart-eyes-fill"></i>                                    
+                                        Me Gusta - ${tema.meGusta}</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    tarjetas.push(tarjeta);
+                }
+                cards.innerHTML= tarjetas.join(' ');          
+                const botonIngresar = document.getElementById('botonIngresar');
+                botonIngresar.innerHTML = '';
+            } else {
+                for (const tema of cancionesAMostrar) {
+                    tarjeta = `
+                    <div class="col mt-5 mb-1">   
+                        <div class="card bg-transparent" onclick="logearse()">
+                        <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 10rem;">   
+                            <div class="card-body">
+                                <ul class="textInfo">
+                                    <li><a class="cardText">${tema.titulo}</a></li>
+                                    <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                                    <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
+                                    <li><button class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
+                                        <i class="bi bi-emoji-heart-eyes-fill"> </i>                                    
+                                        Me Gusta - ${tema.meGusta}</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    tarjetas.push(tarjeta);
+                }
+        }
+            cards.innerHTML= tarjetas.join(' ');          
+            const botonIngresar = document.getElementById('botonIngresar');
+            botonIngresar.innerHTML = '';
+        }
+}
+/** -------------------------------------------------------------------------------- */
+const main =  () => {                          
+        localStorage.setItem('temas', JSON.stringify(song));
+        mostrarCanciones(song);        
+        totalSong = song.length;  
+        menuUsuario.setAttribute("disabled",true);
+        btnHome.setAttribute("cursor","not-allowed");
 }
 /** -------------------------------------------------------------------------------- */
 const iniciarUsers = () =>{        
@@ -476,8 +715,24 @@ const register = () => {
     $("#modalLogin").modal('hide');
     $('#register').modal('show');
 };
-
-
+/**--------------------------------------------------------------------------------------------------------------- */
+formLogin.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const usersLo = JSON.parse(localStorage.getItem('users'));    
+    const userFound = usersLo.find((bus)=> bus.correo === e.target[0].value && bus.clave === e.target[1].value);    
+    if(userFound) {
+        $("#modalLogin").modal('hide');
+        usuario = userFound;
+        localStorage.setItem('temas', JSON.stringify(song));
+        mostrarCanciones(song);        
+        totalSong = song.length;  
+    }
+    else
+    {
+        swal("Error de Login!", "Los datos ingresados no son correctos!!!", "error");
+    }
+});
+/**--------------------------------------------------------------------------------------------------------------- */
 formRegister.addEventListener('submit' , (e) =>{
     e.preventDefault();
     users =JSON.parse(localStorage.getItem('users'));
@@ -501,11 +756,26 @@ formRegister.addEventListener('submit' , (e) =>{
     }
 });
 
-
-
 iniciarUsers()
 
-//main();
 audio.addEventListener('timeupdate',barraTiempoSong);
+
 audio.addEventListener("ended", () => btnNextSong())
+
+btnRepetir.addEventListener('click',repetirSong);
+
+btnAleatorio.addEventListener('click',(e) =>{
+    e.preventDefault();
+    if(randonSong===false) {
+        btnAleatorio.style.color="white";
+        randonSong=true;
+        repSong=true;
+        repetirSong();     
+        aleatorioSong();
+    } else {
+        randonSong=false;        
+        btnAleatorio.style.color="grey";
+    }
+});
+
 
