@@ -145,6 +145,7 @@ const duracionSong = document.getElementById("duracionSong");
 const inicioSong = document.getElementById("inicioSong");
 const barrarProgress = document.getElementById("progress");
 const progressContainer = document.getElementById("progress-container");
+const sidebarLista = document.getElementById("sidebarLista");
 let cards = document.getElementById('cards');
 
 let formCreate = document.getElementById('createNewTema');
@@ -168,6 +169,9 @@ let idVideoDelete = '';
 let usuario = '';
 var repSong=false;
 var randonSong=false;
+
+
+$(".sidebarLista").hide();
 
 
 $(function() {
@@ -326,7 +330,7 @@ const aleatorioSong = () => {
         btnAleatorio.style.color="grey";        
     }
 
-const mostrarCanciones = (cancionesAMostrar) => {
+/* const mostrarCanciones = (cancionesAMostrar) => {
     let tarjeta;
     const tarjetas = [];
     if(usuario.tipo === 'admin') {
@@ -404,7 +408,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
             cards.innerHTML= tarjetas.join(' ');          
             const botonIngresar = document.getElementById('botonIngresar');
             botonIngresar.innerHTML = '';
-        }
+        } */
 
 }
 /** -------------------------------------------------------------------------------- */
@@ -488,7 +492,7 @@ const createLista = () => {
     for (const tema of temas) {
         tarjeta = `
             <div class="card" style="width: 16rem ;">
-            <img src="../img/avatars/users1.png" alt="" style="max-height: 10rem;">   
+            <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;">   
                 <div class="card-body">
                     <ul>
                         <li><a class="cardText">Nombre: ${tema.titulo}</a></li>
@@ -503,10 +507,10 @@ const createLista = () => {
             `;
             tarjetas.push(tarjeta);
         }
+        cards.innerHTML= tarjetas.join(' ');
         let user = users.find((user)=>user.correo === usuario.correo);
         usuario = user;
         for (let i = 0; i < usuario.lista.length; i++) {
-            element = usuario.lista[i];
             const Recorrido = temas.map((tema) => {
                 if (tema.id === usuario.lista[i]) {
                     let temaelegido = `<li>${tema.titulo}</li>`
@@ -515,19 +519,15 @@ const createLista = () => {
             });
         }
             let tuLista = `
-                <div class="contenedorTuLista">    
-                    <div id="cards" class="row row-cols-2 row-cols-md-4 g-4 expand cards">
-                    ${tarjetas.join(' ')}
-                    </div>
                     <div class="ListaSeleccionada">
                         <h4>Tu lista seleccionada</h4>
                         <ol>
                             ${listaDeNombres.join(' ')}
                         </ol>        
                     </div>
-                </div>
                 `
-    contenedorCards.innerHTML= tuLista;
+    sidebarLista.innerHTML = tuLista;    
+    $(".sidebarLista").show();
     }
 
     const addListaReproducciones = (addId) => {
@@ -543,6 +543,7 @@ const createLista = () => {
 
 
     const mostrarMiLista = () => {
+        $(".sidebarLista").hide();
         users = JSON.parse(localStorage.getItem('users'));
         temas = JSON.parse(localStorage.getItem('temas'));
         let listaPropia = [];
@@ -562,7 +563,6 @@ const createLista = () => {
 
     const buscar = (filtro) => {
         temas = JSON.parse(localStorage.getItem('temas'));
-        console.log(temas);
         const temasFiltrados = temas.filter((tema) => 
         (tema?.titulo?.toLowerCase()?.includes(filtro?.toLowerCase()))
         ||

@@ -252,9 +252,15 @@ li {
     
 }
 
-.ListaSeleccionada {
-    color: white;
-    background-color: blue;
+
+
+.sidebarLista {
+    position:fixed;
+    top: 5rem;
+    right: 1rem;
+    background-color: red;
+    height: calc(100vh - 7rem);
+    width: 10rem;
 }
 /* ------------------------------------------------------------------------------------------------------------------------- */
 
