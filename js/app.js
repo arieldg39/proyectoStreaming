@@ -7,7 +7,7 @@ const song =[
         "carpeta":"../audio/Alex Midi - In The Air Tonight (Radio Edit) ft. Delacey.mp3",
         "meGusta":0,
         "categoria":"",
-        "cover":"../img/alexmidi.jpg"
+        "cover":"../img/alexmidi.jpg",
     },
     {
         "id":2,
@@ -472,8 +472,13 @@ const deleteVideo = () => {
 
 const like = (idLike) => {
     temas = JSON.parse(localStorage.getItem('temas'));
+    users =JSON.parse(localStorage.getItem('users'));
+    const userFound = users.find((user) => user.correo === usuario.correo)
+    userFound.listaMeGustas.push(idLike)
+    usuario = userFound;
+    console.log(usuario);
+    localStorage.setItem("users", JSON.stringify(users));
     let songlike = temas.find((song) => song.id === idLike);
-    console.log(songlike);
     songlike.meGusta = songlike.meGusta + 1;
     console.log(songlike.meGusta);
     localStorage.setItem('temas', JSON.stringify(temas));
@@ -483,7 +488,7 @@ const like = (idLike) => {
 const createLista = () => {
     users =JSON.parse(localStorage.getItem('users'));
     temas = JSON.parse(localStorage.getItem('temas'));
-    const userFound = users.find((user) => user.id === usuario.id)
+    const userFound = users.find((user) => user.correo === usuario.correo)
     let tarjeta;
     let listaDeNombres= [];
     const tarjetas = [];
@@ -602,6 +607,7 @@ const logearse = () => {
 /** -------------------------------------------------------------------------------- */
 const mostrarCanciones = (cancionesAMostrar) => {
     let tarjeta;
+    let habilitacionLike = "";
     cards.innerHTML="";
     let tarjetas = [];    
     listsSong = cancionesAMostrar;
@@ -643,6 +649,12 @@ const mostrarCanciones = (cancionesAMostrar) => {
                     document.getElementById("formLogin").reset();
                     nameUser.textContent = usuario.nombre;
                     menuUsuario.setAttribute("disabled",false);
+                    habilitacionLike = "";
+                    for (const idLike of usuario.listaMeGustas) {
+                        if (idLike === tema.id) {
+                            habilitacionLike = "disabled"
+                        }
+                    }
                     tarjeta = `
                     <div class="col mt-5 mb-1">
                         <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id}')">
@@ -652,7 +664,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
                                     <li><a class="cardText">${tema.titulo}</a></li>
                                     <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
                                     <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
-                                    <li><button class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
+                                    <li><button ${habilitacionLike} class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
                                         <i class="bi bi-emoji-heart-eyes-fill"></i>                                    
                                         Me Gusta - ${tema.meGusta}</button>
                                     </li>
@@ -677,7 +689,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
                                     <li><a class="cardText">${tema.titulo}</a></li>
                                     <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
                                     <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
-                                    <li><button class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
+                                    <li><button disabled class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
                                         <i class="bi bi-emoji-heart-eyes-fill"> </i>                                    
                                         Me Gusta - ${tema.meGusta}</button>
                                     </li>
@@ -695,9 +707,12 @@ const mostrarCanciones = (cancionesAMostrar) => {
         }
 }
 /** -------------------------------------------------------------------------------- */
-const main =  () => {                          
-        localStorage.setItem('temas', JSON.stringify(song));
-        mostrarCanciones(song);        
+const main =  () => {
+        temas =JSON.parse(localStorage.getItem('temas'));                          
+        if (!temas) {
+            localStorage.setItem('temas', JSON.stringify(song));
+        }
+        mostrarCanciones(temas);        
         totalSong = song.length;  
         menuUsuario.setAttribute("disabled",true);
         btnHome.setAttribute("cursor","not-allowed");
@@ -712,7 +727,8 @@ const iniciarUsers = () =>{
             correo:'administrador@gmail.com',
             clave: '1234',
             tipo:'admin',
-            lista: []
+            lista: [],
+            listaMeGustas: []
         };               
         users.push(user);
         localStorage.setItem("users", JSON.stringify(users));        
@@ -732,8 +748,11 @@ formLogin.addEventListener('submit',(e)=>{
     if(userFound) {
         $("#modalLogin").modal('hide');
         usuario = userFound;
-        localStorage.setItem('temas', JSON.stringify(song));
-        mostrarCanciones(song);        
+        temas = JSON.parse(localStorage.getItem('temas'));
+        if(!temas){
+            localStorage.setItem('temas', JSON.stringify(song));
+        }
+        mostrarCanciones(temas);        
         totalSong = song.length;  
     }
     else
@@ -750,7 +769,8 @@ formRegister.addEventListener('submit' , (e) =>{
         correo:e.target[1].value,
         clave: e.target[2].value,
         tipo:'user',
-        lista: []
+        lista: [],
+        listaMeGustas: []
     };
     const buscarUser = users.find((bus)=> bus.correo === e.target[1].value);  
     if(!buscarUser){
