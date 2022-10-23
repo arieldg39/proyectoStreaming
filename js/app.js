@@ -490,8 +490,8 @@ const createLista = () => {
     temas = JSON.parse(localStorage.getItem('temas'));
     const userFound = users.find((user) => user.correo === usuario.correo)
     let tarjeta;
-    let listaDeNombres= [];
     const tarjetas = [];
+    let listaDeNombres= [];
     let contenedorCards = document.getElementById('contenedorCards');
     console.log(contenedorCards);
     for (const tema of temas) {
@@ -553,6 +553,8 @@ const createLista = () => {
         users = JSON.parse(localStorage.getItem('users'));
         temas = JSON.parse(localStorage.getItem('temas'));
         let listaPropia = [];
+        let tarjeta;
+        const tarjetas = [];
         let user = users.find((user)=>user.correo === usuario.correo);
         usuario = user;
         for (let i = 0; i < usuario.lista.length; i++) {
@@ -564,7 +566,22 @@ const createLista = () => {
             });
         }
         console.log(listaPropia);
-        mostrarCanciones(listaPropia);
+        for (const tema of listaPropia) {
+            tarjeta = `
+                <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id}')">
+                <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;">   
+                    <div class="card-body">
+                        <ul>
+                            <li><a class="cardText">Nombre: ${tema.titulo}</a></li>
+                            <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                            <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
+                        </ul>
+                    </div>
+                </div>
+                `;
+                tarjetas.push(tarjeta);
+            }
+            cards.innerHTML= tarjetas.join(' ');
     }
 
     const eliminarLista = () => {
@@ -652,7 +669,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
                     habilitacionLike = "";
                     for (const idLike of usuario.listaMeGustas) {
                         if (idLike === tema.id) {
-                            habilitacionLike = "disabled"
+                            habilitacionLike = "disabled";
                         }
                     }
                     tarjeta = `
