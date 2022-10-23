@@ -523,7 +523,8 @@ const createLista = () => {
                         <h4>Tu lista seleccionada</h4>
                         <ol>
                             ${listaDeNombres.join(' ')}
-                        </ol>        
+                        </ol>
+                        <button class="btn btn-danger" onclick="eliminarLista()">Eliminar lista</button>        
                     </div>
                 `
     sidebarLista.innerHTML = tuLista;    
@@ -559,6 +560,14 @@ const createLista = () => {
         }
         console.log(listaPropia);
         mostrarCanciones(listaPropia);
+    }
+
+    const eliminarLista = () => {
+        users = JSON.parse(localStorage.getItem('users'));
+        let user = users.find((user)=>user.correo === usuario.correo);
+        user.lista = [];
+        localStorage.setItem("users", JSON.stringify(users));
+        createLista();
     }
 
     const buscar = (filtro) => {

@@ -258,9 +258,10 @@ li {
     position:fixed;
     top: 5rem;
     right: 1rem;
-    background-color: red;
+    background-color: rgb(123, 0, 255);
     height: calc(100vh - 7rem);
     width: 10rem;
+    overflow: auto;
 }
 /* ------------------------------------------------------------------------------------------------------------------------- */
 
