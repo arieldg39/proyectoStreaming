@@ -78,6 +78,7 @@
         </ul>
     </nav>
     <!----------------------------------------------------------------------------------------------------------------->  
+    
       <div id="contenedorCards">
           <div id="cards" class="row row-cols-2 row-cols-md-4 g-4 expand cards">
 
@@ -178,6 +179,44 @@
             </div>
         </div>
       </div>
+
+      <!-- Modal EDITAR -->
+      <div class="modal fade" id="ModalEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Editar</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="formEdit">
+                      <div class="mb-3">
+                          <label for="tituloEdit" class="form-label">Titulo</label>
+                          <input type="text" class="form-control" id="tituloEdit">
+                      </div>
+                      <div class="mb-3">
+                          <label for="interpreteEdit" class="form-label">interprete</label>
+                          <input type="text" class="form-control" id="interpreteEdit">
+                      </div>
+                      <div class="mb-3">
+                          <label for="carpetaEdit" class="form-label">Carpeta</label>
+                          <input type="text" class="form-control" id="carpetaEdit">
+                      </div>
+                      <div class="mb-3">
+                          <label for="coverEdit" class="form-label">Cover</label>
+                          <input type="text" class="form-control" id="coverEdit">
+                      </div>
+                      <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">EDITAR</button>
+                  </form>
+                </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
       <!--------------------------------------------------------------------------------------------------------------------------------------->
       <div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

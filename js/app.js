@@ -169,6 +169,7 @@ let idVideoDelete = '';
 let usuario = '';
 var repSong=false;
 var randonSong=false;
+let temaToEdit;
 
 
 $(".sidebarLista").hide();
@@ -428,14 +429,10 @@ formCreate.addEventListener('submit' , (e) =>{
         id: generateId(),
 
     }
-    let temasStorage = localStorage.getItem('temas');
-    if(!temasStorage) {
-        localStorage.setItem('temas', JSON.stringify([newVideo]));
-    }else {
-        temas.push(newTema);
-        console.log(temas);
-        localStorage.setItem('temas', JSON.stringify(temas));
-    }
+    let temas = JSON.parse(localStorage.getItem('temas'));
+    temas.push(newTema);
+    console.log(temas);
+    localStorage.setItem('temas', JSON.stringify(temas));
     temas = JSON.parse(localStorage.getItem('temas'));
     mostrarCanciones(temas);
     document.getElementById('formCreate').reset();
@@ -572,6 +569,48 @@ const createLista = () => {
     
     };
 
+    const editarTema = (id) => {
+        console.log(id);
+        temaToEdit = id;
+        temas = JSON.parse(localStorage.getItem('temas'));
+        const temaEncontrado = temas.find((tema) => `${tema.id}` === id)
+        console.log(temaEncontrado);
+        tituloEdit.value = temaEncontrado.titulo;
+        interpreteEdit.value = temaEncontrado.interprete;
+        carpetaEdit.value = temaEncontrado.carpeta;
+        coverEdit.value = temaEncontrado.cover;
+        $('#ModalEdit').modal('show');
+    }
+
+    formEdit.addEventListener('submit', (e) =>{
+        e.preventDefault();
+        let temaEdit = {
+            titulo: e.target[0].value,
+            interprete: e.target[1].value,
+            carpeta: e.target[2].value,
+            id: temaToEdit,
+            meGusta: 0,
+            categoria:"",
+            cover: e.target[3].value,
+        }
+        temas = JSON.parse(localStorage.getItem('temas'));
+        const temasEditados = temas.map((tema) => {
+            
+            if (tema.id == temaToEdit) {
+                return temaEdit;
+            }
+            return tema;
+        });
+        mostrarCanciones(temasEditados)
+        localStorage.setItem('temas', JSON.stringify(temasEditados));
+        formEdit.reset();
+        $('#editUser').modal('hide');
+    });
+    
+
+    const info = (id) => {
+        window.location= `../page/detalle.html#${id}`
+    }
 
 /** -------------------------------------------------------------------------------- */
 const loadListSonmg = (user) =>{
@@ -617,6 +656,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
                             </li>
                         </ul>
                             <button class="btn btn-danger" onclick="ModaleliminarVideo('${tema.id}', '${tema.titulo}')">Eliminar</button>
+                            <button class="btn btn-primary" onclick="editarTema('${tema.id}')">Editar</button>        
                     </div>
                 </div>
             </div>
@@ -648,6 +688,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
                                         Me Gusta - ${tema.meGusta}</button>
                                     </li>
                                 </ul>
+                                <button class="btn btn-secondary info" onclick="info(${tema.id})">info</button>
                             </div>
                         </div>
                     </div>
