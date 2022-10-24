@@ -28,7 +28,7 @@
               <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto"> 
                   <li class="nav-item">
-                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalAbout">Quienes Somos?</a>
+                    <a class="nav-link" href="./page/error404.html" data-bs-toggle="modal" data-bs-target="#modalAbout">Quienes Somos?</a>
                   </li>                
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="menuUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -36,8 +36,6 @@
                       <span class="hidden-md-down" id="nameUser" ></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="menuUsuario">
-                      <li><a class="dropdown-item" href="#">Perfil</a></li>
-                      <li><a class="dropdown-item" href="#"  onclick="nuevoVideo()">Administrar Canciones</a></li>
                       <li id="opLogion"><a class="dropdown-item" href="#" onclick="logearse()">Login</a></li>
                       <li class="hide" id="opLogout"><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar Sesion</a></li>
                     </ul>
@@ -54,19 +52,24 @@
             <span></span>
         <ul class="sidebarMenu">           
             <li>
+                <a href="#" onclick="home()">        
+                  <i class="bi  bi-collection-play"></i> HOME
+                </a>
+            </li>
+            <li>
                 <a href="#" onclick="mostrarMiLista()">        
                   <i class="bi  bi-collection-play"></i> Tu Lista
                 </a>
             </li>
             <li>
 
-                <a href="#" onclick="createLista()">
+                <a href="./page/error404.html" onclick="createLista()">
                   <i class="bi bi-plus-square" ></i> Crear tu Lista
                 </a>
 
             </li>
             <li>
-                <a href="#"> <i class="bi bi-gear"></i> Configurar</a>
+                <a href="./page/error404.html"> <i class="bi bi-gear"></i> Configurar</a>
             </li>
             <li id="bgModeBtn"> 
               <a href="./page/error404.html">

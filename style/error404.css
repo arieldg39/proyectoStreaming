@@ -1,0 +1,103 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+
+:root {
+    --color1: #2C3639;
+    --fondo:  #3F4E4F;
+    --color3: #ffb562;
+    --colorProgress: red;
+    --grey: grey;
+    --dark: black;
+}
+
+body{
+
+    background-image: linear-gradient(135deg,
+    #00B7D4,#505488,#2F3F80,#161569,#5A4894,#A950A1,#FF7CAE);
+    background-size: 500%;
+    animation: fanimado 10s infinite;
+}
+
+main{
+    flex-direction: column;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: violet;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+div.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.regresar{
+    display: flex;
+    justify-content: flex-end;  
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 5px;
+    margin: 5px;
+}
+
+
+
+button > a{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-decoration: none;
+    color: white;
+}
+
+button{
+    background-color: violet;
+    color: white;
+    border-radius: 5px;
+    list-style: none;
+    box-shadow: 0px 5px 5px -6px black;
+    padding: 3px;
+    margin: 3px;
+}
+
+button:hover{
+    background-color: var(--color3);
+    transition: 0.5s;
+    cursor: pointer;
+    border: 2px solid blue;
+}
+
+nav.redes{
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+}
+
+.redes > a{
+    color: violet;
+}
+
+.redes > a:hover {
+    color: var(--color3);
+}
+
+
+@keyframes fanimado {
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+
+@media screen and (max-widht:480px) {
+    body{
+        background-color: #2C3639;
+    }
+}    
