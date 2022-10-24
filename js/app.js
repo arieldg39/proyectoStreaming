@@ -73,7 +73,7 @@ const song =[
         "titulo":"In the air tonight (live)",
         "interprete":"Phil Collins",
         "duracion":408,
-        "carpeta":"../audio/Phil Collins - In the air tonight (live)",
+        "carpeta":"../audio/Phil Collins - In the air tonight (live).mp3",
         "meGusta":0,
         "categoria":"",
         "cover":"../img/collings.jpg"
@@ -137,6 +137,8 @@ const btnBack = document.getElementById("btnBack");
 const btnSilenciar = document.getElementById("btnSilenciar");
 const btnRepetir = document.getElementById("btnRepetir");
 const btnAleatorio = document.getElementById("btnAleatorio");
+const opLogion = document.getElementById("opLogion");
+const opLogout = document.getElementById("opLogout");
 
 
 const iconPlay = document.getElementById("iconPlay");
@@ -163,6 +165,7 @@ let listsSong;
 let opcion;
 var actualSong=0;
 let totalSong=0;
+let totalSongUser=1;
 var users=[];
 let temas = [];
 let idVideoDelete = '';
@@ -276,35 +279,93 @@ const btnplaySong = () => {
     } 
 }
 /** -------------------------------------------------------------------------------- */
-const btnNextSong = () => {    
-    if(randonSong===true) {
-        aleatorioSong();
-    } else {
-        if(repSong===true) {
-            playSong(actualSong);
+const btnNextSong = () => {  
+    if(usuario.tipo==="user")
+    {        
+        for (let i = 0; i < usuario.lista.length; i++) {
+            if(actualSong == usuario.lista[i])
+            {               
+                alert(actualSong);
+                actualSong= usuario.lista[i+1];                
+                break;
+            }
         }
-        else{
-            if (actualSong < totalSong) {
-                actualSong++;        
+        alert(actualSong+" "+totalSongUser);
+        if(randonSong===true) {
+            aleatorioSong();
+        } else {
+            if(repSong===true) {
                 playSong(actualSong);
-            } else {
-                playSong(0);
+            }
+            else{
+                if (totalSongUser < totalSong) {                    
+                    totalSongUser++;
+                    playSong(actualSong);
+                } else {
+                    playSong(usuario.lista[0]);
+                }
+            }
+        }                
+    } else {
+        alert(actualSong);
+        if(randonSong===true) {
+            aleatorioSong();
+        } else {
+            if(repSong===true) {
+                playSong(actualSong);
+            }
+            else{
+                if (actualSong < totalSong) {
+                    actualSong++;        
+                    playSong(actualSong);
+                } else {
+                    playSong(0);
+                }
             }
         }
     }
+    
 }
 /** -------------------------------------------------------------------------------- */
 const btnbackward = () => {  
-    if(repSong===true)  {
-        playSong(actualSong);
-    }
-    else{
-        if (actualSong > 0) {        
-            actualSong--;
-            playSong(actualSong);
+    if(usuario.tipo==="user")
+    {        
+        for (let i = 0; i < usuario.lista.length; i++) {
+            if(actualSong == usuario.lista[i])
+            {
+                
+                actualSong= usuario.lista[i-1];                
+                break;
+            }
+        }
+        alert(actualSong);
+        if ( actualSong === "undefined" ? 1:0 )
+        {
+            actualSong=totalSong;
+        }
+        alert(actualSong);
+        if(randonSong===true) {
+            aleatorioSong();
         } else {
-            totalSong--;
-            playSong(totalSong);
+            if(repSong===true) {
+                playSong(actualSong);
+            }
+            else{
+                playSong(actualSong);               
+            }
+        }                
+    } else {
+        if(repSong===true)  {
+            playSong(actualSong);
+        }
+        else{
+            if (actualSong > 0) {        
+                actualSong--;
+                playSong(actualSong);
+            } else {
+                totalSong--;
+                playSong(totalSong);
+            }
         }
     }
 }
@@ -331,8 +392,6 @@ const aleatorioSong = () => {
         btnAleatorio.style.color="grey";        
     }
 
-
-}
 /** -------------------------------------------------------------------------------- */
 const nuevoTema = () => {    
     $('#createNewTema').modal('show');
@@ -389,6 +448,14 @@ const deleteVideo = () => {
     $('#deleteVideoModal').modal('hide');
 }
 
+const eliminarLista = () => {
+    users = JSON.parse(localStorage.getItem('users'));
+    let user = users.find((user)=>user.correo === usuario.correo);
+    user.lista = [];
+    localStorage.setItem("users", JSON.stringify(users));
+    createLista();
+}
+
 const like = (idLike) => {
     temas = JSON.parse(localStorage.getItem('temas'));
     users =JSON.parse(localStorage.getItem('users'));
@@ -423,20 +490,21 @@ const createLista = () => {
     console.log(contenedorCards);
     for (const tema of temas) {
         tarjeta = `
-            <div class="card" style="width: 16rem ;">
-            <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;">   
-                <div class="card-body">
-                    <ul>
-                        <li><a class="cardText">Nombre: ${tema.titulo}</a></li>
-                        <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
-                        <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
-                    </ul>
-                    <button type="button" class="btn btn-secondary" onclick="addListaReproducciones('${tema.id}')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                    </svg> Agregar a lista de resproducciones</button>
-                </div>
-            </div>
-            `;
+        <div class="col  mb-1 mt-1">
+                <div class="card" style="width: 16rem;">
+                <img style="max-height: 12rem;" src="${tema.cover}" alt="Imagen del Album de la Cancion">   
+                    <div class="card-body">
+                        <ul class="textInfo">
+                            <li><a class="cardText">${tema.titulo}</a></li>
+                            <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                            <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>                            
+                        </ul>
+                        <button type="button" class="btn btn-secondary" onclick="addListaReproducciones(${tema.id})" class="bi bi-plus-circle-fill">
+                            Agregar 
+                        </button>
+                    </div>
+        </div>
+            `;        
             tarjetas.push(tarjeta);
         }
         cards.innerHTML= tarjetas.join(' ');
@@ -450,17 +518,19 @@ const createLista = () => {
                 }
             });
         }
-            let tuLista = `
-                    <div class="ListaSeleccionada">
-                        <h4>Tu lista seleccionada</h4>
+
+        let tuLista = `                
+                    <div class="ListaSeleccionada" id=listaSelec">
+                        <h4 class="text-center">Tu lista seleccionada</h4>
                         <ol>
                             ${listaDeNombres.join(' ')}
-                        </ol>
-                        <button class="btn btn-danger" onclick="eliminarLista()">Eliminar lista</button>        
-                    </div>
-                `
-    sidebarLista.innerHTML = tuLista;    
-    $(".sidebarLista").show();
+                        </ol>  
+                        <div class="text-center">
+                            <button class="btn btn-danger mb-2" onclick="eliminarLista()"><i class="bi bi-trash3-fill"></i> Eliminar Lista</button> 
+                        </div>
+                    </div>`;
+        cards.innerHTML=tarjetas.join(' ')+tuLista;        
+
     }
 
     const addListaReproducciones = (addId) => {
@@ -492,6 +562,7 @@ const createLista = () => {
                 }
             });
         }
+
         console.log(listaPropia);
         for (const tema of listaPropia) {
             tarjeta = `
@@ -517,6 +588,7 @@ const createLista = () => {
         user.lista = [];
         localStorage.setItem("users", JSON.stringify(users));
         createLista();
+
     }
 
     const buscar = (filtro) => {
@@ -584,7 +656,10 @@ const loadListSonmg = (user) =>{
 const cerrarSesion = () =>{
    /*  mainContaneir.innerHTML=""; */ 
     nameUser.textContent='';    
-    barraPlay.classList.add('hide');    
+    barraPlay.classList.add('hide');
+    opLogion.classList.remove("hide");
+    opLogout.classList.add("hide");
+    window.location="index.html";
 }
 /** -------------------------------------------------------------------------------- */
 const logearse = () => {
@@ -601,10 +676,11 @@ const mostrarCanciones = (cancionesAMostrar) => {
     if(usuario.tipo === 'admin') {
         for (const tema of cancionesAMostrar) {
             document.getElementById("formLogin").reset();
-            nameUser.textContent = usuario.nombre;
-            menuUsuario.setAttribute("disabled",false);
+            nameUser.textContent = usuario.nombre; 
+            nav.classList.toggle('hide');
+            cards.classList.toggle('expand');           
             tarjeta = `
-            <div class="col mt-5 mb-1">
+            <div class="col  mb-1">
                 <div class="card" style="width: 16rem;">
                 <img style="max-height: 12rem;" src="${tema.cover}" alt="Imagen del Album de la Cancion"  onclick="playSong('${tema.id}')">   
                     <div class="card-body">
@@ -631,8 +707,11 @@ const mostrarCanciones = (cancionesAMostrar) => {
         }
         else 
         {
-            if (usuario.tipo === 'user') {
-                for (const tema of cancionesAMostrar) {
+
+           if (usuario.tipo === 'user') {                
+              if(usuario.lista.length > 0) {                
+                
+                  for (const tema of cancionesAMostrar) {
                     document.getElementById("formLogin").reset();
                     nameUser.textContent = usuario.nombre;
                     menuUsuario.setAttribute("disabled",false);
@@ -657,15 +736,22 @@ const mostrarCanciones = (cancionesAMostrar) => {
                                     </li>
                                 </ul>
                                 <button class="btn btn-secondary info" onclick="info(${tema.id})">info</button>
+
                             </div>
                         </div>
-                    </div>
-                    `;
-                    tarjetas.push(tarjeta);
+                        `;
+                        tarjetas.push(tarjeta);
+                        }
+                  
+                    cards.innerHTML= tarjetas.join(' ');          
+                    const botonIngresar = document.getElementById('botonIngresar');
+                    botonIngresar.innerHTML = '';                    
+                } 
+                else 
+                {
+                    swal("Informacion", "Debe crear tu lista antes de usar!!!", "info");
                 }
-                cards.innerHTML= tarjetas.join(' ');          
-                const botonIngresar = document.getElementById('botonIngresar');
-                botonIngresar.innerHTML = '';
+
             } else {
                 for (const tema of cancionesAMostrar) {
                     tarjeta = `
@@ -695,6 +781,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
         }
 }
 /** -------------------------------------------------------------------------------- */
+
 const main =  () => {
         temas =JSON.parse(localStorage.getItem('temas'));                          
         if (!temas) {
@@ -703,7 +790,7 @@ const main =  () => {
         mostrarCanciones(temas);        
         totalSong = song.length;  
         menuUsuario.setAttribute("disabled",true);
-        btnHome.setAttribute("cursor","not-allowed");
+
 }
 /** -------------------------------------------------------------------------------- */
 const iniciarUsers = () =>{        
@@ -736,12 +823,21 @@ formLogin.addEventListener('submit',(e)=>{
     if(userFound) {
         $("#modalLogin").modal('hide');
         usuario = userFound;
-        temas = JSON.parse(localStorage.getItem('temas'));
-        if(!temas){
-            localStorage.setItem('temas', JSON.stringify(song));
+
+        localStorage.setItem('temas', JSON.stringify(song));
+        if(usuario.tipo === "user"){
+            opLogion.classList.add("hide");
+            opLogout.classList.remove("hide");
+            mostrarMiLista();
+        } else {
+            mostrarCanciones(song);        
+            totalSong = song.length; 
+            opLogion.classList.add("hide");
+            opLogout.classList.remove("hide");
         }
-        mostrarCanciones(temas);        
-        totalSong = song.length;  
+        nav.classList.toggle('hide');
+        cards.classList.toggle('expand');
+
     }
     else
     {
