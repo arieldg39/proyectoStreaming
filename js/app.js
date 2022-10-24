@@ -159,6 +159,7 @@ const toggle_btn = document.getElementById('toggle-btn');
 
 const menuUsuario = document.getElementById('menuUsuario');
 
+const botonIngresar = document.getElementById('botonIngresar');
 
 var secondPlay=0;
 let listsSong;
@@ -391,7 +392,7 @@ const aleatorioSong = () => {
     } else {
         btnAleatorio.style.color="grey";        
     }
-
+}
 /** -------------------------------------------------------------------------------- */
 const nuevoTema = () => {    
     $('#createNewTema').modal('show');
@@ -448,13 +449,7 @@ const deleteVideo = () => {
     $('#deleteVideoModal').modal('hide');
 }
 
-const eliminarLista = () => {
-    users = JSON.parse(localStorage.getItem('users'));
-    let user = users.find((user)=>user.correo === usuario.correo);
-    user.lista = [];
-    localStorage.setItem("users", JSON.stringify(users));
-    createLista();
-}
+
 
 const like = (idLike) => {
     temas = JSON.parse(localStorage.getItem('temas'));
@@ -473,8 +468,6 @@ const like = (idLike) => {
 
 const likes = (idLike) => {
     console.log(`${idLike}`);
-
-
 } 
 
 
@@ -542,7 +535,7 @@ const createLista = () => {
         console.log(users);
         localStorage.setItem("users", JSON.stringify(users));
         createLista();
-    }
+    };
 
 
     const mostrarMiLista = () => {
@@ -580,7 +573,7 @@ const createLista = () => {
                 tarjetas.push(tarjeta);
             }
             cards.innerHTML= tarjetas.join(' ');
-    }
+    };
 
     const eliminarLista = () => {
         users = JSON.parse(localStorage.getItem('users'));
@@ -588,8 +581,8 @@ const createLista = () => {
         user.lista = [];
         localStorage.setItem("users", JSON.stringify(users));
         createLista();
+    };
 
-    }
 
     const buscar = (filtro) => {
         temas = JSON.parse(localStorage.getItem('temas'));
@@ -599,7 +592,6 @@ const createLista = () => {
         (tema?.interprete?.toLowerCase()?.includes(filtro?.toLowerCase()))
         );
         mostrarCanciones(temasFiltrados);
-    
     };
 
     const editarTema = (id) => {
@@ -702,57 +694,49 @@ const mostrarCanciones = (cancionesAMostrar) => {
             tarjetas.push(tarjeta);
         }
         cards.innerHTML= tarjetas.join(' ');
-        const botonIngresar = document.getElementById('botonIngresar');
-        botonIngresar.innerHTML = '<button class="btn btn-dark" onclick="nuevoTema()">Insertar nuevo video</button>'       
-        }
-        else 
-        {
-
-           if (usuario.tipo === 'user') {                
-              if(usuario.lista.length > 0) {                
-                
-                  for (const tema of cancionesAMostrar) {
-                    document.getElementById("formLogin").reset();
-                    nameUser.textContent = usuario.nombre;
-                    menuUsuario.setAttribute("disabled",false);
-                    habilitacionLike = "";
-                    for (const idLike of usuario.listaMeGustas) {
-                        if (idLike === tema.id) {
-                            habilitacionLike = "disabled";
+        console.log(botonIngresar);
+        botonIngresar.innerHTML = '<button class="btn btn-dark" onclick="nuevoTema()">Ingresar nuevo Tema</button>';
+        }else if (usuario.tipo === 'user') {                
+                if(usuario.lista.length > 0) {                
+                    for (const tema of cancionesAMostrar) {
+                        document.getElementById("formLogin").reset();
+                        nameUser.textContent = usuario.nombre;
+                        menuUsuario.setAttribute("disabled",false);
+                        habilitacionLike = "";
+                        for (const idLike of usuario.listaMeGustas) {
+                            if (idLike === tema.id) {
+                                habilitacionLike = "disabled";
+                            }
                         }
-                    }
-                    tarjeta = `
-                    <div class="col mt-5 mb-1">
-                        <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id}')">
-                        <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;">   
-                            <div class="card-body">
-                                <ul class="textInfo">
-                                    <li><a class="cardText">${tema.titulo}</a></li>
-                                    <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
-                                    <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
-                                    <li><button ${habilitacionLike} class="btn btn-outline-primary meGusta" onclick="like('${tema.id}')">
-                                        <i class="bi bi-emoji-heart-eyes-fill"></i>                                    
-                                        Me Gusta - ${tema.meGusta}</button>
-                                    </li>
-                                </ul>
-                                <button class="btn btn-secondary info" onclick="info(${tema.id})">info</button>
+                        tarjeta = `
+                        <div class="col mt-5 mb-1">
+                            <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id}')">
+                            <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;">   
+                                <div class="card-body">
+                                    <ul class="textInfo">
+                                        <li><a class="cardText">${tema.titulo}</a></li>
+                                        <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                                        <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
+                                        <li><button ${habilitacionLike} class="btn btn-outline-primary meGusta" onclick="like('${tema.id}')">
+                                            <i class="bi bi-emoji-heart-eyes-fill"></i>                                    
+                                            Me Gusta - ${tema.meGusta}</button>
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-secondary info" onclick="info(${tema.id})">info</button>
 
+                                </div>
                             </div>
-                        </div>
-                        `;
-                        tarjetas.push(tarjeta);
-                        }
-                  
-                    cards.innerHTML= tarjetas.join(' ');          
-                    const botonIngresar = document.getElementById('botonIngresar');
-                    botonIngresar.innerHTML = '';                    
-                } 
-                else 
+                            `;
+                            tarjetas.push(tarjeta);
+                            }
+                        cards.innerHTML= tarjetas.join(' ');          
+                        botonIngresar.innerHTML = '';                    
+                } else 
                 {
                     swal("Informacion", "Debe crear tu lista antes de usar!!!", "info");
                 }
 
-            } else {
+    } else {
                 for (const tema of cancionesAMostrar) {
                     tarjeta = `
                     <div class="col mt-5 mb-1">   
@@ -776,10 +760,9 @@ const mostrarCanciones = (cancionesAMostrar) => {
                 }
         }
             cards.innerHTML= tarjetas.join(' ');          
-            const botonIngresar = document.getElementById('botonIngresar');
-            botonIngresar.innerHTML = '';
-        }
+            /* botonIngresar.innerHTML = ''; */
 }
+
 /** -------------------------------------------------------------------------------- */
 
 const main =  () => {
@@ -787,10 +770,11 @@ const main =  () => {
         if (!temas) {
             localStorage.setItem('temas', JSON.stringify(song));
         }
-        mostrarCanciones(temas);        
+        console.log(temas);
+        
+        mostrarCanciones(temas);     
         totalSong = song.length;  
         menuUsuario.setAttribute("disabled",true);
-
 }
 /** -------------------------------------------------------------------------------- */
 const iniciarUsers = () =>{        
@@ -890,5 +874,3 @@ btnAleatorio.addEventListener('click',(e) =>{
         btnAleatorio.style.color="grey";
     }
 });
-
-
