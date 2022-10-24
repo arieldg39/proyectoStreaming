@@ -176,15 +176,15 @@ footer  i {
 }
 /* ------------------------------------------------------------------------------------------------------------------------- */
 .cards {
-    width: 100%;
-    margin-left: 2rem !important;
-    transition: ease-in 0.3s;
-}
-
-.cards.expand{    
     margin-left: 270px !important;    
     margin-right: 50px !important;
     width: calc(100% - 270px);    
+    transition: ease-in 0.3s;   
+}
+
+.cards.expand{    
+    width: 100%;
+    margin-left: 2rem !important;
     transition: ease-in 0.3s;
 }
 
@@ -254,7 +254,12 @@ li {
 
 .ListaSeleccionada {
     color: white;
-    background-color: blue;
+    background-color: blue;    
+    position: fixed;
+    top: 5rem;
+    right: 1rem;  
+    border-radius: 5%;
+    padding: 1rem; 
 }
 /* ------------------------------------------------------------------------------------------------------------------------- */
 

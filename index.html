@@ -15,7 +15,7 @@
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
             <div class="container-fluid">
               <a href="#" class="navbar-ico"></a>
-              <a class="navbar-brand lbMusica" href="#">RollingMusic's</a>
+              <a class="navbar-brand lbMusica" href="index.html">RollingMusic's</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>              
@@ -38,7 +38,8 @@
                     <ul class="dropdown-menu" aria-labelledby="menuUsuario">
                       <li><a class="dropdown-item" href="#">Perfil</a></li>
                       <li><a class="dropdown-item" href="#"  onclick="nuevoVideo()">Administrar Canciones</a></li>
-                      <li><a class="dropdown-item" href="#" onclick="logearse()">Login</a></li>
+                      <li id="opLogion"><a class="dropdown-item" href="#" onclick="logearse()">Login</a></li>
+                      <li class="hide" id="opLogout"><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar Sesion</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -48,13 +49,10 @@
     </header>
     <main class="container-pri">    
       <!----------------------------------------------------------------------------------------------------------------->     
-      <nav id="sideVar">
+      <nav id="sideVar" class="hide">
         <button type="button" id="toggle-btn"><img src="./img/logo.png" alt="" width="50px"></button>
             <span></span>
-        <ul class="sidebarMenu">
-            <li >
-                <a href="#" id="btnHome"> <i class="bi bi-house-door"></i> Home</a>
-            </li>
+        <ul class="sidebarMenu">           
             <li>
                 <a href="#" onclick="mostrarMiLista()">        
                   <i class="bi  bi-collection-play"></i> Tu Lista
@@ -176,7 +174,7 @@
         </div>
       </div>
       <!--------------------------------------------------------------------------------------------------------------------------------------->
-      <div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal fade" id="modalLogin" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- Login Form -->
