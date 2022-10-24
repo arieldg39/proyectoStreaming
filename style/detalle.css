@@ -1,0 +1,25 @@
+body {
+    max-height: 100vh;
+    background-color: black !important;
+    color: white;           
+}
+
+h1 {
+    color: white;
+    text-decoration: underline;
+}
+.contenedor {
+    display: flex;  
+    background-color: rgb(28, 27, 27);
+    color: white;
+    font-size: x-large;
+}
+
+.img {
+    width: 20rem;
+    height: 20rem;
+}
+
+.volver {
+    margin: 3rem;
+}

@@ -235,8 +235,20 @@ li {
 
 .meGusta {
     font-size: small;
-
 }
+
+.info {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: .4rem;
+    width: 4rem;
+    height: 1.4rem;
+    padding: 0px !important;
+    font-size: small !important;
+}
+
+
 
 .botonIng {
     padding: 2rem;
