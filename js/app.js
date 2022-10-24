@@ -286,14 +286,12 @@ const btnNextSong = () => {
         for (let i = 0; i < usuario.lista.length; i++) {
             if(actualSong == usuario.lista[i])
             {               
-                alert(actualSong);
                 actualSong= usuario.lista[i+1];                
                 break;
             }
         }
         alert(actualSong+" "+totalSongUser);
         if(randonSong===true) {
-            aleatorioSong();
         } else {
             if(repSong===true) {
                 playSong(actualSong);
@@ -308,7 +306,6 @@ const btnNextSong = () => {
             }
         }                
     } else {
-        alert(actualSong);
         if(randonSong===true) {
             aleatorioSong();
         } else {
@@ -338,13 +335,11 @@ const btnbackward = () => {
                 actualSong= usuario.lista[i-1];                
                 break;
             }
-        }
-        alert(actualSong);
+        } 
         if ( actualSong === "undefined" ? 1:0 )
         {
             actualSong=totalSong;
         }
-        alert(actualSong);
         if(randonSong===true) {
             aleatorioSong();
         } else {
@@ -454,7 +449,7 @@ const deleteVideo = () => {
 const like = (idLike) => {
     temas = JSON.parse(localStorage.getItem('temas'));
     users =JSON.parse(localStorage.getItem('users'));
-    const userFound = users.find((user) => user.correo === usuario.correo)
+    const userFounrard = users.find((user) => user.correo === usuario.correo)
     userFound.listaMeGustas.push(`${idLike}`)
     usuario = userFound;
     console.log(usuario);
@@ -547,6 +542,7 @@ const createLista = () => {
         const tarjetas = [];
         let user = users.find((user)=>user.correo === usuario.correo);
         usuario = user;
+        nameUser.textContent= usuario.nombre;
         for (let i = 0; i < usuario.lista.length; i++) {
             element = usuario.lista[i];
             const Recorrido = temas.map((tema) => {
@@ -637,6 +633,11 @@ const createLista = () => {
         window.location= `../page/detalle.html#${id}`
     }
 
+    const home = () => {
+        temas = JSON.parse(localStorage.getItem('temas'));
+        mostrarCanciones(temas);
+    }
+
 /** -------------------------------------------------------------------------------- */
 const loadListSonmg = (user) =>{
     nameUser.textContent = user.nombre;
@@ -647,6 +648,10 @@ const loadListSonmg = (user) =>{
 /** -------------------------------------------------------------------------------- */
 const cerrarSesion = () =>{
    /*  mainContaneir.innerHTML=""; */ 
+    const usersLo = JSON.parse(localStorage.getItem('users'));    
+    const userFound = usersLo.find((user)=> user.correo === usuario.correo );
+    userFound.log = false;
+    localStorage.setItem('users', JSON.stringify(usersLo));
     nameUser.textContent='';    
     barraPlay.classList.add('hide');
     opLogion.classList.remove("hide");
@@ -696,12 +701,10 @@ const mostrarCanciones = (cancionesAMostrar) => {
         cards.innerHTML= tarjetas.join(' ');
         console.log(botonIngresar);
         botonIngresar.innerHTML = '<button class="btn btn-dark" onclick="nuevoTema()">Ingresar nuevo Tema</button>';
-        }else if (usuario.tipo === 'user') {                
-                if(usuario.lista.length > 0) {                
+        }else if (usuario.tipo === 'user') {                                
                     for (const tema of cancionesAMostrar) {
                         document.getElementById("formLogin").reset();
                         nameUser.textContent = usuario.nombre;
-                        menuUsuario.setAttribute("disabled",false);
                         habilitacionLike = "";
                         for (const idLike of usuario.listaMeGustas) {
                             if (idLike === tema.id) {
@@ -731,11 +734,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
                             }
                         cards.innerHTML= tarjetas.join(' ');          
                         botonIngresar.innerHTML = '';                    
-                } else 
-                {
-                    swal("Informacion", "Debe crear tu lista antes de usar!!!", "info");
-                }
-
+            
     } else {
                 for (const tema of cancionesAMostrar) {
                     tarjeta = `
@@ -773,8 +772,7 @@ const main =  () => {
         console.log(temas);
         
         mostrarCanciones(temas);     
-        totalSong = song.length;  
-        menuUsuario.setAttribute("disabled",true);
+        totalSong = song.length; 
 }
 /** -------------------------------------------------------------------------------- */
 const iniciarUsers = () =>{        
@@ -787,10 +785,19 @@ const iniciarUsers = () =>{
             clave: '1234',
             tipo:'admin',
             lista: [],
-            listaMeGustas: []
+            listaMeGustas: [],
+            log: ""
         };               
         users.push(user);
         localStorage.setItem("users", JSON.stringify(users));        
+    }else {
+        for (const user of users) {
+            if (user.log) {
+                usuario = user;
+                opLogion.classList.add("hide");
+                opLogout.classList.remove("hide");
+            }
+        }
     }
     main();
 }
@@ -807,8 +814,9 @@ formLogin.addEventListener('submit',(e)=>{
     if(userFound) {
         $("#modalLogin").modal('hide');
         usuario = userFound;
-
+        userFound.log = true;
         localStorage.setItem('temas', JSON.stringify(song));
+        localStorage.setItem('users', JSON.stringify(usersLo));
         if(usuario.tipo === "user"){
             opLogion.classList.add("hide");
             opLogout.classList.remove("hide");
@@ -838,7 +846,8 @@ formRegister.addEventListener('submit' , (e) =>{
         clave: e.target[2].value,
         tipo:'user',
         lista: [],
-        listaMeGustas: []
+        listaMeGustas: [],
+        log: ""
     };
     const buscarUser = users.find((bus)=> bus.correo === e.target[1].value);  
     if(!buscarUser){
