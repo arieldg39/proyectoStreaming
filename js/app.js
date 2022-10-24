@@ -406,7 +406,7 @@ formCreate.addEventListener('submit' , (e) =>{
         interprete: e.target[1].value,
         carpeta: e.target[2].value,
         descripcion: e.target[3].value,
-        duracion: e.target[4].value,
+        cover: e.target[4].value,
         meGusta: 0,
         id: generateId(),
 
