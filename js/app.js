@@ -1,16 +1,16 @@
 const song =[
     {
-        "id":1,
+        "id":"1",
         "titulo":"In The Air Tonight (Radio Edit) ft. Delacey",
         "interprete":"Alex Midi",
         "duracion":227,
         "carpeta":"../audio/Alex Midi - In The Air Tonight (Radio Edit) ft. Delacey.mp3",
         "meGusta":0,
         "categoria":"",
-        "cover":"../img/alexmidi.jpg"
+        "cover":"../img/alexmidi.jpg",
     },
     {
-        "id":2,
+        "id":"2",
         "titulo":"Bronceado",
         "interprete":"Marama",
         "duracion":154,
@@ -20,7 +20,7 @@ const song =[
         "cover":"../img/marama.jpg"
     },
     {
-        "id":3,
+        "id":"3",
         "titulo":"Blame ft. John Newman",
         "interprete":"Calvin Harris",
         "duracion":154,
@@ -30,7 +30,7 @@ const song =[
         "cover":"../img/calvinharrisblame.jpg"
     },
     {
-        "id":4,
+        "id":"4",
         "titulo":"Robarte un Beso",
         "interprete":"Carlos Vives - Sebastian Yatra",
         "duracion":181,
@@ -39,7 +39,7 @@ const song =[
         "cover":"../img/Robarte_un_Beso.jpg"
     },
     {
-        "id":5,
+        "id":"5",
         "titulo":"Para Enamorarte",
         "interprete":"CNCO",
         "duracion":181,
@@ -49,7 +49,7 @@ const song =[
         "cover":"../img/ParaEnamorarte.jpg"
         },
     {
-        "id":6,
+        "id":"6",
         "titulo":"Adventure Of A Lifetime",
         "interprete":"Coldplay",
         "duracion":181,
@@ -59,7 +59,7 @@ const song =[
         "cover":"../img/aventure.jpg"
     },
     {
-        "id":7,
+        "id":"7",
         "titulo":"Mama Said",
         "interprete":"Lukas Graham",
         "duracion":208,
@@ -69,7 +69,7 @@ const song =[
         "cover":"../img/lukas_graham_mama_said.jpg"
     },
     {
-        "id":8,
+        "id":"8",
         "titulo":"In the air tonight (live)",
         "interprete":"Phil Collins",
         "duracion":408,
@@ -79,7 +79,7 @@ const song =[
         "cover":"../img/collings.jpg"
     },
     {
-        "id":9,
+        "id":"9",
         "titulo":"Amor Con Hielo",
         "interprete":"Morat",
         "duracion":408,
@@ -89,7 +89,7 @@ const song =[
         "cover":"../img/morat_amor_con_hielo.jpg"
     },
     {
-        "id":10,
+        "id":"10",
         "titulo":"Like a Stone",
         "interprete":"Audioslave",
         "duracion":408,
@@ -99,7 +99,7 @@ const song =[
         "cover":"../img/audioslave.jpg"
     },
     {
-        "id":11,
+        "id":"11",
         "titulo":"Dark Necessities.mp3",
         "interprete":"Red Hoychili Peppers",
         "duracion":408,
@@ -110,7 +110,7 @@ const song =[
     }  
     ,
     {
-        "id":12,
+        "id":"12",
         "titulo":"Perfect.mp3",
         "interprete":"Ed sheeran",
         "duracion":408,
@@ -147,6 +147,7 @@ const duracionSong = document.getElementById("duracionSong");
 const inicioSong = document.getElementById("inicioSong");
 const barrarProgress = document.getElementById("progress");
 const progressContainer = document.getElementById("progress-container");
+const sidebarLista = document.getElementById("sidebarLista");
 let cards = document.getElementById('cards');
 
 let formCreate = document.getElementById('createNewTema');
@@ -171,6 +172,10 @@ let idVideoDelete = '';
 let usuario = '';
 var repSong=false;
 var randonSong=false;
+let temaToEdit;
+
+
+$(".sidebarLista").hide();
 
 
 $(function() {
@@ -386,7 +391,6 @@ const aleatorioSong = () => {
     } else {
         btnAleatorio.style.color="grey";        
     }
-}
 
 /** -------------------------------------------------------------------------------- */
 const nuevoTema = () => {    
@@ -401,18 +405,15 @@ formCreate.addEventListener('submit' , (e) =>{
         interprete: e.target[1].value,
         carpeta: e.target[2].value,
         descripcion: e.target[3].value,
+        duracion: e.target[4].value,
         meGusta: 0,
         id: generateId(),
 
     }
-    let temasStorage = localStorage.getItem('temas');
-    if(!temasStorage) {
-        localStorage.setItem('temas', JSON.stringify([newVideo]));
-    }else {
-        temas.push(newTema);
-        console.log(temas);
-        localStorage.setItem('temas', JSON.stringify(temas));
-    }
+    let temas = JSON.parse(localStorage.getItem('temas'));
+    temas.push(newTema);
+    console.log(temas);
+    localStorage.setItem('temas', JSON.stringify(temas));
     temas = JSON.parse(localStorage.getItem('temas'));
     mostrarCanciones(temas);
     document.getElementById('formCreate').reset();
@@ -457,21 +458,34 @@ const eliminarLista = () => {
 
 const like = (idLike) => {
     temas = JSON.parse(localStorage.getItem('temas'));
-    let songlike = temas.find((song) => song.id === idLike);
-    console.log(songlike);
-    songlike.meGusta = songlike.meGusta + 1;
-    console.log(songlike.meGusta);
+    users =JSON.parse(localStorage.getItem('users'));
+    const userFound = users.find((user) => user.correo === usuario.correo)
+    userFound.listaMeGustas.push(`${idLike}`)
+    usuario = userFound;
+    console.log(usuario);
+    localStorage.setItem("users", JSON.stringify(users));
+    let temalike = temas.find((tema) => tema.id == idLike);
+    temalike.meGusta = temalike.meGusta + 1;
+    console.log(temalike.meGusta);
     localStorage.setItem('temas', JSON.stringify(temas));
     mostrarCanciones(temas);
 }
 
+const likes = (idLike) => {
+    console.log(`${idLike}`);
+
+
+} 
+
+
+
 const createLista = () => {
     users =JSON.parse(localStorage.getItem('users'));
     temas = JSON.parse(localStorage.getItem('temas'));
-    const userFound = users.find((user) => user.id === usuario.id)
+    const userFound = users.find((user) => user.correo === usuario.correo)
     let tarjeta;
-    let listaDeNombres= [];
     const tarjetas = [];
+    let listaDeNombres= [];
     let contenedorCards = document.getElementById('contenedorCards');
     console.log(contenedorCards);
     for (const tema of temas) {
@@ -489,15 +503,14 @@ const createLista = () => {
                             Agregar 
                         </button>
                     </div>
-                </div>
         </div>
             `;        
             tarjetas.push(tarjeta);
         }
+        cards.innerHTML= tarjetas.join(' ');
         let user = users.find((user)=>user.correo === usuario.correo);
         usuario = user;
         for (let i = 0; i < usuario.lista.length; i++) {
-            element = usuario.lista[i];
             const Recorrido = temas.map((tema) => {
                 if (tema.id === usuario.lista[i]) {
                     let temaelegido = `<li>${tema.titulo}</li>`
@@ -505,6 +518,7 @@ const createLista = () => {
                 }
             });
         }
+
         let tuLista = `                
                     <div class="ListaSeleccionada" id=listaSelec">
                         <h4 class="text-center">Tu lista seleccionada</h4>
@@ -516,6 +530,7 @@ const createLista = () => {
                         </div>
                     </div>`;
         cards.innerHTML=tarjetas.join(' ')+tuLista;        
+
     }
 
     const addListaReproducciones = (addId) => {
@@ -523,7 +538,7 @@ const createLista = () => {
         console.log(usuario);
         let userFound = users.find((user) => user.correo === usuario.correo);
         console.log(userFound);
-        userFound.lista.push(addId);
+        userFound.lista.push(`${addId}`);
         console.log(users);
         localStorage.setItem("users", JSON.stringify(users));
         createLista();
@@ -531,9 +546,12 @@ const createLista = () => {
 
 
     const mostrarMiLista = () => {
+        $(".sidebarLista").hide();
         users = JSON.parse(localStorage.getItem('users'));
         temas = JSON.parse(localStorage.getItem('temas'));
         let listaPropia = [];
+        let tarjeta;
+        const tarjetas = [];
         let user = users.find((user)=>user.correo === usuario.correo);
         usuario = user;
         for (let i = 0; i < usuario.lista.length; i++) {
@@ -544,14 +562,37 @@ const createLista = () => {
                 }
             });
         }
-        //alert(listaPropia.length);
-        totalSong=listaPropia.length;
-        mostrarCanciones(listaPropia);
+
+        console.log(listaPropia);
+        for (const tema of listaPropia) {
+            tarjeta = `
+                <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id}')">
+                <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;">   
+                    <div class="card-body">
+                        <ul>
+                            <li><a class="cardText">Nombre: ${tema.titulo}</a></li>
+                            <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                            <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
+                        </ul>
+                    </div>
+                </div>
+                `;
+                tarjetas.push(tarjeta);
+            }
+            cards.innerHTML= tarjetas.join(' ');
+    }
+
+    const eliminarLista = () => {
+        users = JSON.parse(localStorage.getItem('users'));
+        let user = users.find((user)=>user.correo === usuario.correo);
+        user.lista = [];
+        localStorage.setItem("users", JSON.stringify(users));
+        createLista();
+
     }
 
     const buscar = (filtro) => {
         temas = JSON.parse(localStorage.getItem('temas'));
-        console.log(temas);
         const temasFiltrados = temas.filter((tema) => 
         (tema?.titulo?.toLowerCase()?.includes(filtro?.toLowerCase()))
         ||
@@ -561,6 +602,48 @@ const createLista = () => {
     
     };
 
+    const editarTema = (id) => {
+        console.log(id);
+        temaToEdit = id;
+        temas = JSON.parse(localStorage.getItem('temas'));
+        const temaEncontrado = temas.find((tema) => `${tema.id}` === id)
+        console.log(temaEncontrado);
+        tituloEdit.value = temaEncontrado.titulo;
+        interpreteEdit.value = temaEncontrado.interprete;
+        carpetaEdit.value = temaEncontrado.carpeta;
+        coverEdit.value = temaEncontrado.cover;
+        $('#ModalEdit').modal('show');
+    }
+
+    formEdit.addEventListener('submit', (e) =>{
+        e.preventDefault();
+        let temaEdit = {
+            titulo: e.target[0].value,
+            interprete: e.target[1].value,
+            carpeta: e.target[2].value,
+            id: temaToEdit,
+            meGusta: 0,
+            categoria:"",
+            cover: e.target[3].value,
+        }
+        temas = JSON.parse(localStorage.getItem('temas'));
+        const temasEditados = temas.map((tema) => {
+            
+            if (tema.id == temaToEdit) {
+                return temaEdit;
+            }
+            return tema;
+        });
+        mostrarCanciones(temasEditados)
+        localStorage.setItem('temas', JSON.stringify(temasEditados));
+        formEdit.reset();
+        $('#editUser').modal('hide');
+    });
+    
+
+    const info = (id) => {
+        window.location= `../page/detalle.html#${id}`
+    }
 
 /** -------------------------------------------------------------------------------- */
 const loadListSonmg = (user) =>{
@@ -585,6 +668,7 @@ const logearse = () => {
 /** -------------------------------------------------------------------------------- */
 const mostrarCanciones = (cancionesAMostrar) => {
     let tarjeta;
+    let habilitacionLike = "";
     cards.innerHTML="";
     let tarjetas = [];    
     listsSong = cancionesAMostrar;
@@ -604,12 +688,13 @@ const mostrarCanciones = (cancionesAMostrar) => {
                             <li><a class="cardText">${tema.titulo}</a></li>
                             <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
                             <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
-                            <li><button class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
-                                <i class="bi bi-emoji-heart-eyes-fill"></i>
+                            <li><button class="btn btn-outline-primary meGusta" onclick="like('${tema.id}')">
+                                <i class="bi bi-emoji-heart-eyes-fill"></i>                                    
                                 Me Gusta - ${tema.meGusta}</button>
                             </li>
                         </ul>
-                            <button class="btn btn-danger" onclick="ModaleliminarVideo('${tema.id}', '${tema.titulo}')"><i class="bi bi-delete"></i></button>
+                            <button class="btn btn-danger" onclick="ModaleliminarVideo('${tema.id}', '${tema.titulo}')">Eliminar</button>
+                            <button class="btn btn-primary" onclick="editarTema('${tema.id}')">Editar</button>        
                     </div>
                 </div>
             </div>
@@ -622,31 +707,42 @@ const mostrarCanciones = (cancionesAMostrar) => {
         }
         else 
         {
-            if (usuario.tipo === 'user') {                
-                if(usuario.lista.length > 0) {
-                    for (const tema of cancionesAMostrar) {
-                        document.getElementById("formLogin").reset();
-                        nameUser.textContent = usuario.nombre;                    
-                        tarjeta = `
-                        <div class="col mt-5 mb-1">
-                            <div class="card" style="width: 16rem ;" >
-                                    <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;" onclick="playSong('${tema.id}')">   
-                                <div class="card-body">
-                                    <ul class="textInfo">
-                                        <li><a class="cardText">${tema.titulo}</a></li>
-                                        <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
-                                        <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
-                                        <li><button class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
+
+           if (usuario.tipo === 'user') {                
+              if(usuario.lista.length > 0) {                
+                
+                  for (const tema of cancionesAMostrar) {
+                    document.getElementById("formLogin").reset();
+                    nameUser.textContent = usuario.nombre;
+                    menuUsuario.setAttribute("disabled",false);
+                    habilitacionLike = "";
+                    for (const idLike of usuario.listaMeGustas) {
+                        if (idLike === tema.id) {
+                            habilitacionLike = "disabled";
+                        }
+                    }
+                    tarjeta = `
+                    <div class="col mt-5 mb-1">
+                        <div class="card" style="width: 16rem ;" onclick="playSong('${tema.id}')">
+                        <img src="${tema.cover}" alt="Imagen del Album de la Cancion" style="max-height: 15rem;">   
+                            <div class="card-body">
+                                <ul class="textInfo">
+                                    <li><a class="cardText">${tema.titulo}</a></li>
+                                    <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
+                                    <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
+                                    <li><button ${habilitacionLike} class="btn btn-outline-primary meGusta" onclick="like('${tema.id}')">
                                         <i class="bi bi-emoji-heart-eyes-fill"></i>                                    
-                                            Me Gusta - ${tema.meGusta}</button>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        Me Gusta - ${tema.meGusta}</button>
+                                    </li>
+                                </ul>
+                                <button class="btn btn-secondary info" onclick="info(${tema.id})">info</button>
+
                             </div>
                         </div>
                         `;
                         tarjetas.push(tarjeta);
-                    }
+                        }
+                  
                     cards.innerHTML= tarjetas.join(' ');          
                     const botonIngresar = document.getElementById('botonIngresar');
                     botonIngresar.innerHTML = '';                    
@@ -667,7 +763,7 @@ const mostrarCanciones = (cancionesAMostrar) => {
                                     <li><a class="cardText">${tema.titulo}</a></li>
                                     <li><a class="cardTextSecond">Autor: ${tema.interprete}</a></li>
                                     <li><p class="cardTextSecond">descripción: ${tema.descripcion}</p></li>
-                                    <li><button class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
+                                    <li><button disabled class="btn btn-outline-primary meGusta" onclick="like(${tema.id})">
                                         <i class="bi bi-emoji-heart-eyes-fill"> </i>                                    
                                         Me Gusta - ${tema.meGusta}</button>
                                     </li>
@@ -685,10 +781,16 @@ const mostrarCanciones = (cancionesAMostrar) => {
         }
 }
 /** -------------------------------------------------------------------------------- */
-const main =  () => {                          
-        localStorage.setItem('temas', JSON.stringify(song));
-        mostrarCanciones(song);        
-        totalSong = song.length;                  
+
+const main =  () => {
+        temas =JSON.parse(localStorage.getItem('temas'));                          
+        if (!temas) {
+            localStorage.setItem('temas', JSON.stringify(song));
+        }
+        mostrarCanciones(temas);        
+        totalSong = song.length;  
+        menuUsuario.setAttribute("disabled",true);
+
 }
 /** -------------------------------------------------------------------------------- */
 const iniciarUsers = () =>{        
@@ -700,7 +802,8 @@ const iniciarUsers = () =>{
             correo:'administrador@gmail.com',
             clave: '1234',
             tipo:'admin',
-            lista: []
+            lista: [],
+            listaMeGustas: []
         };               
         users.push(user);
         localStorage.setItem("users", JSON.stringify(users));        
@@ -720,6 +823,7 @@ formLogin.addEventListener('submit',(e)=>{
     if(userFound) {
         $("#modalLogin").modal('hide');
         usuario = userFound;
+
         localStorage.setItem('temas', JSON.stringify(song));
         if(usuario.tipo === "user"){
             opLogion.classList.add("hide");
@@ -733,6 +837,7 @@ formLogin.addEventListener('submit',(e)=>{
         }
         nav.classList.toggle('hide');
         cards.classList.toggle('expand');
+
     }
     else
     {
@@ -748,7 +853,8 @@ formRegister.addEventListener('submit' , (e) =>{
         correo:e.target[1].value,
         clave: e.target[2].value,
         tipo:'user',
-        lista: []
+        lista: [],
+        listaMeGustas: []
     };
     const buscarUser = users.find((bus)=> bus.correo === e.target[1].value);  
     if(!buscarUser){

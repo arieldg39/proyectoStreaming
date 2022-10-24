@@ -235,11 +235,24 @@ li {
 
 .meGusta {
     font-size: small;
-
 }
+
+.info {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: .4rem;
+    width: 4rem;
+    height: 1.4rem;
+    padding: 0px !important;
+    font-size: small !important;
+}
+
+
 
 .botonIng {
     padding: 2rem;
+    text-align: center;
 }
 
 #headerModal {
@@ -252,6 +265,7 @@ li {
     
 }
 
+
 .ListaSeleccionada {
     color: white;
     background-color: blue;    
@@ -260,6 +274,18 @@ li {
     right: 1rem;  
     border-radius: 5%;
     padding: 1rem; 
+
+
+
+/*.sidebarLista {
+    position:fixed;
+    top: 5rem;
+    right: 1rem;
+    background-color: rgb(123, 0, 255);
+    height: calc(100vh - 7rem);
+    width: 10rem;
+    overflow: auto;*/
+
 }
 /* ------------------------------------------------------------------------------------------------------------------------- */
 
